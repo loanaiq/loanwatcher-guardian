@@ -134,7 +134,7 @@ const Index = () => {
     <div className="container mx-auto p-6">
       <h1 className="text-3xl font-bold mb-6 text-primary">Loan Monitoring Dashboard</h1>
       
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
         <Card>
           <CardHeader>
             <CardTitle className="text-sm font-medium">Total Disbursement</CardTitle>
@@ -164,6 +164,16 @@ const Index = () => {
             <p className="text-xs text-muted-foreground">Based on current patterns</p>
           </CardContent>
         </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-sm font-medium">Active Loan Accounts</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">127</div>
+            <p className="text-xs text-muted-foreground">+3 new this month</p>
+          </CardContent>
+        </Card>
       </div>
 
       <Tabs defaultValue="utilization" className="space-y-4">
@@ -182,24 +192,26 @@ const Index = () => {
                 disbursed: { color: "#1a365d" },
                 utilized: { color: "#059669" }
               }}>
-                <LineChart data={loanData}>
-                  <XAxis dataKey="month" />
-                  <YAxis tickFormatter={(value) => `₹${(value / 10000000).toFixed(1)}Cr`} />
-                  <ChartTooltip formatter={(value) => formatIndianCurrency(value)} />
-                  <Legend />
-                  <Line 
-                    type="monotone" 
-                    dataKey="disbursed" 
-                    stroke="#1a365d" 
-                    name="Disbursed Amount" 
-                  />
-                  <Line 
-                    type="monotone" 
-                    dataKey="utilized" 
-                    stroke="#059669" 
-                    name="Utilized Amount" 
-                  />
-                </LineChart>
+                <ResponsiveContainer width="100%" height="100%">
+                  <LineChart data={loanData}>
+                    <XAxis dataKey="month" />
+                    <YAxis tickFormatter={(value) => `₹${(Number(value) / 10000000).toFixed(1)}Cr`} />
+                    <ChartTooltip formatter={(value: number) => formatIndianCurrency(value)} />
+                    <Legend />
+                    <Line 
+                      type="monotone" 
+                      dataKey="disbursed" 
+                      stroke="#1a365d" 
+                      name="Disbursed Amount" 
+                    />
+                    <Line 
+                      type="monotone" 
+                      dataKey="utilized" 
+                      stroke="#059669" 
+                      name="Utilized Amount" 
+                    />
+                  </LineChart>
+                </ResponsiveContainer>
               </ChartContainer>
             </CardContent>
           </Card>
