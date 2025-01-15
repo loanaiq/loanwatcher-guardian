@@ -6,14 +6,15 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { AlertTriangle, ArrowUpRight } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 
-// Sample data - replace with real data in production
+// Sample data with Indian Rupee values
 const loanData = [
-  { month: 'Jan', disbursed: 100000, utilized: 80000 },
-  { month: 'Feb', disbursed: 150000, utilized: 120000 },
-  { month: 'Mar', disbursed: 200000, utilized: 180000 },
-  { month: 'Apr', disbursed: 180000, utilized: 170000 },
-  { month: 'May', disbursed: 220000, utilized: 190000 },
+  { month: 'Jan', disbursed: 10000000, utilized: 8000000 },
+  { month: 'Feb', disbursed: 15000000, utilized: 12000000 },
+  { month: 'Mar', disbursed: 20000000, utilized: 18000000 },
+  { month: 'Apr', disbursed: 18000000, utilized: 17000000 },
+  { month: 'May', disbursed: 22000000, utilized: 19000000 },
 ];
 
 const customerSegments = [
@@ -24,9 +25,30 @@ const customerSegments = [
     risk: "Low", 
     utilizationRate: "92%",
     transactions: [
-      { date: "2024-03-01", amount: 50000, category: "Equipment", flag: false },
-      { date: "2024-03-05", amount: 30000, category: "Marketing", flag: true },
-      { date: "2024-03-10", amount: 20000, category: "Operations", flag: false },
+      { 
+        date: "2024-03-01", 
+        amount: 5000000, 
+        type: "debit",
+        category: "Equipment", 
+        paymentMethod: "RTGS",
+        flag: false 
+      },
+      { 
+        date: "2024-03-05", 
+        amount: 3000000, 
+        type: "credit",
+        category: "Repayment", 
+        paymentMethod: "Cheque",
+        flag: true 
+      },
+      { 
+        date: "2024-03-10", 
+        amount: 2000000, 
+        type: "debit",
+        category: "Operations", 
+        paymentMethod: "NEFT",
+        flag: false 
+      },
     ]
   },
   { 
@@ -36,9 +58,30 @@ const customerSegments = [
     risk: "Medium", 
     utilizationRate: "78%",
     transactions: [
-      { date: "2024-03-02", amount: 40000, category: "Inventory", flag: false },
-      { date: "2024-03-07", amount: 25000, category: "Unknown", flag: true },
-      { date: "2024-03-12", amount: 35000, category: "Equipment", flag: false },
+      { 
+        date: "2024-03-02", 
+        amount: 4000000, 
+        type: "debit",
+        category: "Inventory", 
+        paymentMethod: "Cash",
+        flag: false 
+      },
+      { 
+        date: "2024-03-07", 
+        amount: 2500000, 
+        type: "credit",
+        category: "Unknown", 
+        paymentMethod: "Cheque",
+        flag: true 
+      },
+      { 
+        date: "2024-03-12", 
+        amount: 3500000, 
+        type: "debit",
+        category: "Equipment", 
+        paymentMethod: "RTGS",
+        flag: false 
+      },
     ]
   },
   { 
@@ -48,12 +91,41 @@ const customerSegments = [
     risk: "High", 
     utilizationRate: "65%",
     transactions: [
-      { date: "2024-03-03", amount: 60000, category: "Unknown", flag: true },
-      { date: "2024-03-08", amount: 45000, category: "Real Estate", flag: true },
-      { date: "2024-03-13", amount: 15000, category: "Operations", flag: false },
+      { 
+        date: "2024-03-03", 
+        amount: 6000000, 
+        type: "debit",
+        category: "Unknown", 
+        paymentMethod: "Cash",
+        flag: true 
+      },
+      { 
+        date: "2024-03-08", 
+        amount: 4500000, 
+        type: "credit",
+        category: "Real Estate", 
+        paymentMethod: "RTGS",
+        flag: true 
+      },
+      { 
+        date: "2024-03-13", 
+        amount: 1500000, 
+        type: "debit",
+        category: "Operations", 
+        paymentMethod: "NEFT",
+        flag: false 
+      },
     ]
   },
 ];
+
+const formatIndianCurrency = (value: number) => {
+  return new Intl.NumberFormat('en-IN', {
+    style: 'currency',
+    currency: 'INR',
+    maximumFractionDigits: 0
+  }).format(value);
+};
 
 const Index = () => {
   console.log("Rendering loan monitoring dashboard");
@@ -68,7 +140,7 @@ const Index = () => {
             <CardTitle className="text-sm font-medium">Total Disbursement</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">$850,000</div>
+            <div className="text-2xl font-bold">{formatIndianCurrency(85000000)}</div>
             <p className="text-xs text-muted-foreground">+12% from last month</p>
           </CardContent>
         </Card>
@@ -112,8 +184,8 @@ const Index = () => {
               }}>
                 <LineChart data={loanData}>
                   <XAxis dataKey="month" />
-                  <YAxis />
-                  <ChartTooltip />
+                  <YAxis tickFormatter={(value) => `₹${(value / 10000000).toFixed(1)}Cr`} />
+                  <ChartTooltip formatter={(value) => formatIndianCurrency(value)} />
                   <Legend />
                   <Line 
                     type="monotone" 
@@ -194,8 +266,10 @@ const Index = () => {
                                 <TableHeader>
                                   <TableRow>
                                     <TableHead>Date</TableHead>
+                                    <TableHead>Type</TableHead>
                                     <TableHead>Amount</TableHead>
                                     <TableHead>Category</TableHead>
+                                    <TableHead>Payment Method</TableHead>
                                     <TableHead>Status</TableHead>
                                   </TableRow>
                                 </TableHeader>
@@ -203,8 +277,18 @@ const Index = () => {
                                   {customer.transactions.map((transaction, index) => (
                                     <TableRow key={index}>
                                       <TableCell>{transaction.date}</TableCell>
-                                      <TableCell>${transaction.amount.toLocaleString()}</TableCell>
+                                      <TableCell>
+                                        <Badge variant={transaction.type === "credit" ? "success" : "default"}>
+                                          {transaction.type.toUpperCase()}
+                                        </Badge>
+                                      </TableCell>
+                                      <TableCell>{formatIndianCurrency(transaction.amount)}</TableCell>
                                       <TableCell>{transaction.category}</TableCell>
+                                      <TableCell>
+                                        <Badge variant="outline">
+                                          {transaction.paymentMethod}
+                                        </Badge>
+                                      </TableCell>
                                       <TableCell>
                                         {transaction.flag ? (
                                           <div className="flex items-center text-destructive gap-1">
