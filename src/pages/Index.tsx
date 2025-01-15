@@ -24,32 +24,33 @@ const customerSegments = [
     compliance: "High", 
     risk: "Low", 
     utilizationRate: "92%",
-    transactions: [
-      { 
-        date: "2024-03-01", 
-        amount: 5000000, 
-        type: "debit",
-        category: "Equipment", 
-        paymentMethod: "RTGS",
-        flag: false 
-      },
-      { 
-        date: "2024-03-05", 
-        amount: 3000000, 
-        type: "credit",
-        category: "Repayment", 
-        paymentMethod: "Cheque",
-        flag: true 
-      },
-      { 
-        date: "2024-03-10", 
-        amount: 2000000, 
-        type: "debit",
-        category: "Operations", 
-        paymentMethod: "NEFT",
-        flag: false 
-      },
-    ]
+    transactions: {
+      debit: [
+        { 
+          date: "2024-03-01", 
+          amount: 5000000,
+          category: "Equipment", 
+          paymentMethod: "RTGS",
+          flag: false 
+        },
+        { 
+          date: "2024-03-10", 
+          amount: 2000000,
+          category: "Operations", 
+          paymentMethod: "NEFT",
+          flag: false 
+        },
+      ],
+      credit: [
+        { 
+          date: "2024-03-05", 
+          amount: 3000000,
+          category: "Repayment", 
+          paymentMethod: "Cheque",
+          flag: true 
+        }
+      ]
+    }
   },
   { 
     id: 2, 
@@ -57,32 +58,33 @@ const customerSegments = [
     compliance: "Medium", 
     risk: "Medium", 
     utilizationRate: "78%",
-    transactions: [
-      { 
-        date: "2024-03-02", 
-        amount: 4000000, 
-        type: "debit",
-        category: "Inventory", 
-        paymentMethod: "Cash",
-        flag: false 
-      },
-      { 
-        date: "2024-03-07", 
-        amount: 2500000, 
-        type: "credit",
-        category: "Unknown", 
-        paymentMethod: "Cheque",
-        flag: true 
-      },
-      { 
-        date: "2024-03-12", 
-        amount: 3500000, 
-        type: "debit",
-        category: "Equipment", 
-        paymentMethod: "RTGS",
-        flag: false 
-      },
-    ]
+    transactions: {
+      debit: [
+        { 
+          date: "2024-03-02", 
+          amount: 4000000,
+          category: "Inventory", 
+          paymentMethod: "Cash",
+          flag: false 
+        },
+        { 
+          date: "2024-03-12", 
+          amount: 3500000,
+          category: "Equipment", 
+          paymentMethod: "RTGS",
+          flag: false 
+        },
+      ],
+      credit: [
+        { 
+          date: "2024-03-07", 
+          amount: 2500000,
+          category: "Unknown", 
+          paymentMethod: "Cheque",
+          flag: true 
+        }
+      ]
+    }
   },
   { 
     id: 3, 
@@ -90,32 +92,33 @@ const customerSegments = [
     compliance: "Low", 
     risk: "High", 
     utilizationRate: "65%",
-    transactions: [
-      { 
-        date: "2024-03-03", 
-        amount: 6000000, 
-        type: "debit",
-        category: "Unknown", 
-        paymentMethod: "Cash",
-        flag: true 
-      },
-      { 
-        date: "2024-03-08", 
-        amount: 4500000, 
-        type: "credit",
-        category: "Real Estate", 
-        paymentMethod: "RTGS",
-        flag: true 
-      },
-      { 
-        date: "2024-03-13", 
-        amount: 1500000, 
-        type: "debit",
-        category: "Operations", 
-        paymentMethod: "NEFT",
-        flag: false 
-      },
-    ]
+    transactions: {
+      debit: [
+        { 
+          date: "2024-03-03", 
+          amount: 6000000,
+          category: "Unknown", 
+          paymentMethod: "Cash",
+          flag: true 
+        },
+        { 
+          date: "2024-03-13", 
+          amount: 1500000,
+          category: "Operations", 
+          paymentMethod: "NEFT",
+          flag: false 
+        },
+      ],
+      credit: [
+        { 
+          date: "2024-03-08", 
+          amount: 4500000,
+          category: "Real Estate", 
+          paymentMethod: "RTGS",
+          flag: true 
+        }
+      ]
+    }
   },
 ];
 
@@ -238,26 +241,26 @@ const Index = () => {
                     <TableRow key={customer.id}>
                       <TableCell className="font-medium">{customer.name}</TableCell>
                       <TableCell>
-                        <span className={`px-2 py-1 rounded-full text-xs ${
+                        <Badge variant="outline" className={`${
                           customer.compliance === "High" 
-                            ? "bg-success/20 text-success" 
+                            ? "bg-green-100 text-green-800" 
                             : customer.compliance === "Medium"
-                            ? "bg-warning/20 text-warning"
-                            : "bg-destructive/20 text-destructive"
+                            ? "bg-yellow-100 text-yellow-800"
+                            : "bg-red-100 text-red-800"
                         }`}>
                           {customer.compliance}
-                        </span>
+                        </Badge>
                       </TableCell>
                       <TableCell>
-                        <span className={`px-2 py-1 rounded-full text-xs ${
+                        <Badge variant="outline" className={`${
                           customer.risk === "Low" 
-                            ? "bg-success/20 text-success" 
+                            ? "bg-green-100 text-green-800" 
                             : customer.risk === "Medium"
-                            ? "bg-warning/20 text-warning"
-                            : "bg-destructive/20 text-destructive"
+                            ? "bg-yellow-100 text-yellow-800"
+                            : "bg-red-100 text-red-800"
                         }`}>
                           {customer.risk}
-                        </span>
+                        </Badge>
                       </TableCell>
                       <TableCell>{customer.utilizationRate}</TableCell>
                       <TableCell>
@@ -267,54 +270,90 @@ const Index = () => {
                               View Details <ArrowUpRight className="ml-1 h-4 w-4" />
                             </Button>
                           </DialogTrigger>
-                          <DialogContent className="max-w-3xl">
+                          <DialogContent className="max-w-4xl">
                             <DialogHeader>
                               <DialogTitle className="flex items-center gap-2">
                                 {customer.name} - Transaction Analysis
                               </DialogTitle>
                             </DialogHeader>
-                            <div className="mt-4">
-                              <Table>
-                                <TableHeader>
-                                  <TableRow>
-                                    <TableHead>Date</TableHead>
-                                    <TableHead>Type</TableHead>
-                                    <TableHead>Amount</TableHead>
-                                    <TableHead>Category</TableHead>
-                                    <TableHead>Payment Method</TableHead>
-                                    <TableHead>Status</TableHead>
-                                  </TableRow>
-                                </TableHeader>
-                                <TableBody>
-                                  {customer.transactions.map((transaction, index) => (
-                                    <TableRow key={index}>
-                                      <TableCell>{transaction.date}</TableCell>
-                                      <TableCell>
-                                        <Badge variant={transaction.type === "credit" ? "success" : "default"}>
-                                          {transaction.type.toUpperCase()}
-                                        </Badge>
-                                      </TableCell>
-                                      <TableCell>{formatIndianCurrency(transaction.amount)}</TableCell>
-                                      <TableCell>{transaction.category}</TableCell>
-                                      <TableCell>
-                                        <Badge variant="outline">
-                                          {transaction.paymentMethod}
-                                        </Badge>
-                                      </TableCell>
-                                      <TableCell>
-                                        {transaction.flag ? (
-                                          <div className="flex items-center text-destructive gap-1">
-                                            <AlertTriangle className="h-4 w-4" />
-                                            <span>Flagged</span>
-                                          </div>
-                                        ) : (
-                                          <span className="text-success">Normal</span>
-                                        )}
-                                      </TableCell>
+                            <div className="mt-4 space-y-6">
+                              <div>
+                                <h3 className="text-lg font-semibold mb-3">Debit Transactions</h3>
+                                <Table>
+                                  <TableHeader>
+                                    <TableRow>
+                                      <TableHead>Date</TableHead>
+                                      <TableHead>Amount</TableHead>
+                                      <TableHead>Category</TableHead>
+                                      <TableHead>Payment Method</TableHead>
+                                      <TableHead>Status</TableHead>
                                     </TableRow>
-                                  ))}
-                                </TableBody>
-                              </Table>
+                                  </TableHeader>
+                                  <TableBody>
+                                    {customer.transactions.debit.map((transaction, index) => (
+                                      <TableRow key={index}>
+                                        <TableCell>{transaction.date}</TableCell>
+                                        <TableCell>{formatIndianCurrency(transaction.amount)}</TableCell>
+                                        <TableCell>{transaction.category}</TableCell>
+                                        <TableCell>
+                                          <Badge variant="outline">
+                                            {transaction.paymentMethod}
+                                          </Badge>
+                                        </TableCell>
+                                        <TableCell>
+                                          {transaction.flag ? (
+                                            <div className="flex items-center text-destructive gap-1">
+                                              <AlertTriangle className="h-4 w-4" />
+                                              <span>Flagged</span>
+                                            </div>
+                                          ) : (
+                                            <span className="text-green-600">Normal</span>
+                                          )}
+                                        </TableCell>
+                                      </TableRow>
+                                    ))}
+                                  </TableBody>
+                                </Table>
+                              </div>
+                              
+                              <div>
+                                <h3 className="text-lg font-semibold mb-3">Credit Transactions</h3>
+                                <Table>
+                                  <TableHeader>
+                                    <TableRow>
+                                      <TableHead>Date</TableHead>
+                                      <TableHead>Amount</TableHead>
+                                      <TableHead>Category</TableHead>
+                                      <TableHead>Payment Method</TableHead>
+                                      <TableHead>Status</TableHead>
+                                    </TableRow>
+                                  </TableHeader>
+                                  <TableBody>
+                                    {customer.transactions.credit.map((transaction, index) => (
+                                      <TableRow key={index}>
+                                        <TableCell>{transaction.date}</TableCell>
+                                        <TableCell>{formatIndianCurrency(transaction.amount)}</TableCell>
+                                        <TableCell>{transaction.category}</TableCell>
+                                        <TableCell>
+                                          <Badge variant="outline">
+                                            {transaction.paymentMethod}
+                                          </Badge>
+                                        </TableCell>
+                                        <TableCell>
+                                          {transaction.flag ? (
+                                            <div className="flex items-center text-destructive gap-1">
+                                              <AlertTriangle className="h-4 w-4" />
+                                              <span>Flagged</span>
+                                            </div>
+                                          ) : (
+                                            <span className="text-green-600">Normal</span>
+                                          )}
+                                        </TableCell>
+                                      </TableRow>
+                                    ))}
+                                  </TableBody>
+                                </Table>
+                              </div>
                             </div>
                           </DialogContent>
                         </Dialog>
