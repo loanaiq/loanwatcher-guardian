@@ -3,6 +3,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ChartContainer, ChartTooltip } from "@/components/ui/chart";
 import { LineChart, Line, XAxis, YAxis, ResponsiveContainer, Legend } from "recharts";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { AlertTriangle, ArrowUpRight } from "lucide-react";
 
 // Sample data - replace with real data in production
 const loanData = [
@@ -14,9 +17,42 @@ const loanData = [
 ];
 
 const customerSegments = [
-  { id: 1, name: "ABC Corp", compliance: "High", risk: "Low", utilizationRate: "92%" },
-  { id: 2, name: "XYZ Ltd", compliance: "Medium", risk: "Medium", utilizationRate: "78%" },
-  { id: 3, name: "123 Industries", compliance: "Low", risk: "High", utilizationRate: "65%" },
+  { 
+    id: 1, 
+    name: "ABC Corp", 
+    compliance: "High", 
+    risk: "Low", 
+    utilizationRate: "92%",
+    transactions: [
+      { date: "2024-03-01", amount: 50000, category: "Equipment", flag: false },
+      { date: "2024-03-05", amount: 30000, category: "Marketing", flag: true },
+      { date: "2024-03-10", amount: 20000, category: "Operations", flag: false },
+    ]
+  },
+  { 
+    id: 2, 
+    name: "XYZ Ltd", 
+    compliance: "Medium", 
+    risk: "Medium", 
+    utilizationRate: "78%",
+    transactions: [
+      { date: "2024-03-02", amount: 40000, category: "Inventory", flag: false },
+      { date: "2024-03-07", amount: 25000, category: "Unknown", flag: true },
+      { date: "2024-03-12", amount: 35000, category: "Equipment", flag: false },
+    ]
+  },
+  { 
+    id: 3, 
+    name: "123 Industries", 
+    compliance: "Low", 
+    risk: "High", 
+    utilizationRate: "65%",
+    transactions: [
+      { date: "2024-03-03", amount: 60000, category: "Unknown", flag: true },
+      { date: "2024-03-08", amount: 45000, category: "Real Estate", flag: true },
+      { date: "2024-03-13", amount: 15000, category: "Operations", flag: false },
+    ]
+  },
 ];
 
 const Index = () => {
@@ -110,6 +146,7 @@ const Index = () => {
                     <TableHead>Compliance Level</TableHead>
                     <TableHead>Risk Level</TableHead>
                     <TableHead>Utilization Rate</TableHead>
+                    <TableHead>Actions</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -139,6 +176,53 @@ const Index = () => {
                         </span>
                       </TableCell>
                       <TableCell>{customer.utilizationRate}</TableCell>
+                      <TableCell>
+                        <Dialog>
+                          <DialogTrigger asChild>
+                            <Button variant="outline" size="sm">
+                              View Details <ArrowUpRight className="ml-1 h-4 w-4" />
+                            </Button>
+                          </DialogTrigger>
+                          <DialogContent className="max-w-3xl">
+                            <DialogHeader>
+                              <DialogTitle className="flex items-center gap-2">
+                                {customer.name} - Transaction Analysis
+                              </DialogTitle>
+                            </DialogHeader>
+                            <div className="mt-4">
+                              <Table>
+                                <TableHeader>
+                                  <TableRow>
+                                    <TableHead>Date</TableHead>
+                                    <TableHead>Amount</TableHead>
+                                    <TableHead>Category</TableHead>
+                                    <TableHead>Status</TableHead>
+                                  </TableRow>
+                                </TableHeader>
+                                <TableBody>
+                                  {customer.transactions.map((transaction, index) => (
+                                    <TableRow key={index}>
+                                      <TableCell>{transaction.date}</TableCell>
+                                      <TableCell>${transaction.amount.toLocaleString()}</TableCell>
+                                      <TableCell>{transaction.category}</TableCell>
+                                      <TableCell>
+                                        {transaction.flag ? (
+                                          <div className="flex items-center text-destructive gap-1">
+                                            <AlertTriangle className="h-4 w-4" />
+                                            <span>Flagged</span>
+                                          </div>
+                                        ) : (
+                                          <span className="text-success">Normal</span>
+                                        )}
+                                      </TableCell>
+                                    </TableRow>
+                                  ))}
+                                </TableBody>
+                              </Table>
+                            </div>
+                          </DialogContent>
+                        </Dialog>
+                      </TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
