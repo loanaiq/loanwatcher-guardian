@@ -8,13 +8,13 @@ import { Button } from "@/components/ui/button";
 import { AlertTriangle, ArrowUpRight } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
-// Sample data with Indian Rupee values
+// Updated sample data with year and month
 const loanData = [
-  { month: 'Jan', disbursed: 10000000, utilized: 8000000 },
-  { month: 'Feb', disbursed: 15000000, utilized: 12000000 },
-  { month: 'Mar', disbursed: 20000000, utilized: 18000000 },
-  { month: 'Apr', disbursed: 18000000, utilized: 17000000 },
-  { month: 'May', disbursed: 22000000, utilized: 19000000 },
+  { month: 'Jan 2024', disbursed: 10000000, utilized: 8000000 },
+  { month: 'Feb 2024', disbursed: 15000000, utilized: 12000000 },
+  { month: 'Mar 2024', disbursed: 20000000, utilized: 18000000 },
+  { month: 'Apr 2024', disbursed: 18000000, utilized: 17000000 },
+  { month: 'May 2024', disbursed: 22000000, utilized: 19000000 },
 ];
 
 const customerSegments = [
@@ -31,14 +31,18 @@ const customerSegments = [
           amount: 5000000,
           category: "Equipment", 
           paymentMethod: "RTGS",
-          flag: false 
+          flag: false,
+          year: 2024,
+          month: "March"
         },
         { 
           date: "2024-03-10", 
           amount: 2000000,
           category: "Operations", 
           paymentMethod: "NEFT",
-          flag: false 
+          flag: false,
+          year: 2024,
+          month: "March"
         },
       ],
       credit: [
@@ -47,7 +51,9 @@ const customerSegments = [
           amount: 3000000,
           category: "Repayment", 
           paymentMethod: "Cheque",
-          flag: true 
+          flag: true,
+          year: 2024,
+          month: "March"
         }
       ]
     }
@@ -61,27 +67,33 @@ const customerSegments = [
     transactions: {
       debit: [
         { 
-          date: "2024-03-02", 
+          date: "2024-02-02", 
           amount: 4000000,
           category: "Inventory", 
           paymentMethod: "Cash",
-          flag: false 
+          flag: false,
+          year: 2024,
+          month: "February"
         },
         { 
-          date: "2024-03-12", 
+          date: "2024-02-12", 
           amount: 3500000,
           category: "Equipment", 
           paymentMethod: "RTGS",
-          flag: false 
+          flag: false,
+          year: 2024,
+          month: "February"
         },
       ],
       credit: [
         { 
-          date: "2024-03-07", 
+          date: "2024-02-07", 
           amount: 2500000,
           category: "Unknown", 
           paymentMethod: "Cheque",
-          flag: true 
+          flag: true,
+          year: 2024,
+          month: "February"
         }
       ]
     }
@@ -95,27 +107,33 @@ const customerSegments = [
     transactions: {
       debit: [
         { 
-          date: "2024-03-03", 
+          date: "2024-01-03", 
           amount: 6000000,
           category: "Unknown", 
           paymentMethod: "Cash",
-          flag: true 
+          flag: true,
+          year: 2024,
+          month: "January"
         },
         { 
-          date: "2024-03-13", 
+          date: "2024-01-13", 
           amount: 1500000,
           category: "Operations", 
           paymentMethod: "NEFT",
-          flag: false 
+          flag: false,
+          year: 2024,
+          month: "January"
         },
       ],
       credit: [
         { 
-          date: "2024-03-08", 
+          date: "2024-01-08", 
           amount: 4500000,
           category: "Real Estate", 
           paymentMethod: "RTGS",
-          flag: true 
+          flag: true,
+          year: 2024,
+          month: "January"
         }
       ]
     }
@@ -192,7 +210,7 @@ const Index = () => {
         <TabsContent value="utilization" className="space-y-4">
           <Card className="border-2 border-gray-100">
             <CardHeader>
-              <CardTitle className="text-blue-900">Loan Disbursement vs Utilization</CardTitle>
+              <CardTitle className="text-blue-900">Loan Disbursement vs Utilization (2024)</CardTitle>
             </CardHeader>
             <CardContent>
               <ChartContainer className="h-[300px]" config={{
@@ -277,7 +295,7 @@ const Index = () => {
                           <DialogContent className="max-w-4xl">
                             <DialogHeader>
                               <DialogTitle className="flex items-center gap-2">
-                                {customer.name} - Transaction Analysis
+                                {customer.name} - Transaction Analysis (2024)
                               </DialogTitle>
                             </DialogHeader>
                             <div className="mt-4 space-y-6">
@@ -287,6 +305,7 @@ const Index = () => {
                                   <TableHeader>
                                     <TableRow>
                                       <TableHead>Date</TableHead>
+                                      <TableHead>Month</TableHead>
                                       <TableHead>Amount</TableHead>
                                       <TableHead>Category</TableHead>
                                       <TableHead>Payment Method</TableHead>
@@ -297,6 +316,7 @@ const Index = () => {
                                     {customer.transactions.debit.map((transaction, index) => (
                                       <TableRow key={index}>
                                         <TableCell>{transaction.date}</TableCell>
+                                        <TableCell>{transaction.month}</TableCell>
                                         <TableCell>{formatIndianCurrency(transaction.amount)}</TableCell>
                                         <TableCell>{transaction.category}</TableCell>
                                         <TableCell>
@@ -326,6 +346,7 @@ const Index = () => {
                                   <TableHeader>
                                     <TableRow>
                                       <TableHead>Date</TableHead>
+                                      <TableHead>Month</TableHead>
                                       <TableHead>Amount</TableHead>
                                       <TableHead>Category</TableHead>
                                       <TableHead>Payment Method</TableHead>
@@ -336,6 +357,7 @@ const Index = () => {
                                     {customer.transactions.credit.map((transaction, index) => (
                                       <TableRow key={index}>
                                         <TableCell>{transaction.date}</TableCell>
+                                        <TableCell>{transaction.month}</TableCell>
                                         <TableCell>{formatIndianCurrency(transaction.amount)}</TableCell>
                                         <TableCell>{transaction.category}</TableCell>
                                         <TableCell>
