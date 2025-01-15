@@ -134,61 +134,65 @@ const Index = () => {
   console.log("Rendering loan monitoring dashboard");
   
   return (
-    <div className="container mx-auto p-6">
-      <h1 className="text-3xl font-bold mb-6 text-primary">Loan Monitoring Dashboard</h1>
+    <div className="container mx-auto p-6 bg-gradient-to-br from-slate-50 to-white">
+      <h1 className="text-3xl font-bold mb-6 text-primary bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600">Loan Monitoring Dashboard</h1>
       
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-        <Card>
+        <Card className="border-2 border-blue-100 shadow-lg hover:border-blue-200 transition-all">
           <CardHeader>
-            <CardTitle className="text-sm font-medium">Total Disbursement</CardTitle>
+            <CardTitle className="text-sm font-medium text-blue-800">Total Disbursement</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{formatIndianCurrency(85000000)}</div>
-            <p className="text-xs text-muted-foreground">+12% from last month</p>
+            <div className="text-2xl font-bold text-blue-900">{formatIndianCurrency(85000000)}</div>
+            <p className="text-xs text-blue-600">+12% from last month</p>
           </CardContent>
         </Card>
         
-        <Card>
+        <Card className="border-2 border-emerald-100 shadow-lg hover:border-emerald-200 transition-all">
           <CardHeader>
-            <CardTitle className="text-sm font-medium">Utilization Rate</CardTitle>
+            <CardTitle className="text-sm font-medium text-emerald-800">Utilization Rate</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">87%</div>
-            <p className="text-xs text-muted-foreground">Average across all accounts</p>
+            <div className="text-2xl font-bold text-emerald-900">87%</div>
+            <p className="text-xs text-emerald-600">Average across all accounts</p>
           </CardContent>
         </Card>
         
-        <Card>
+        <Card className="border-2 border-amber-100 shadow-lg hover:border-amber-200 transition-all">
           <CardHeader>
-            <CardTitle className="text-sm font-medium">Risk Score</CardTitle>
+            <CardTitle className="text-sm font-medium text-amber-800">Risk Score</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-warning">Medium</div>
-            <p className="text-xs text-muted-foreground">Based on current patterns</p>
+            <div className="text-2xl font-bold text-amber-900">Medium</div>
+            <p className="text-xs text-amber-600">Based on current patterns</p>
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="border-2 border-purple-100 shadow-lg hover:border-purple-200 transition-all">
           <CardHeader>
-            <CardTitle className="text-sm font-medium">Active Loan Accounts</CardTitle>
+            <CardTitle className="text-sm font-medium text-purple-800">Active Loan Accounts</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">127</div>
-            <p className="text-xs text-muted-foreground">+3 new this month</p>
+            <div className="text-2xl font-bold text-purple-900">127</div>
+            <p className="text-xs text-purple-600">+3 new this month</p>
           </CardContent>
         </Card>
       </div>
 
       <Tabs defaultValue="utilization" className="space-y-4">
-        <TabsList>
-          <TabsTrigger value="utilization">Utilization Patterns</TabsTrigger>
-          <TabsTrigger value="compliance">Compliance Analysis</TabsTrigger>
+        <TabsList className="bg-white border-2 border-gray-100 p-1">
+          <TabsTrigger value="utilization" className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-900">
+            Utilization Patterns
+          </TabsTrigger>
+          <TabsTrigger value="compliance" className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-900">
+            Compliance Analysis
+          </TabsTrigger>
         </TabsList>
 
         <TabsContent value="utilization" className="space-y-4">
-          <Card>
+          <Card className="border-2 border-gray-100">
             <CardHeader>
-              <CardTitle>Loan Disbursement vs Utilization</CardTitle>
+              <CardTitle className="text-blue-900">Loan Disbursement vs Utilization</CardTitle>
             </CardHeader>
             <CardContent>
               <ChartContainer className="h-[300px]" config={{
@@ -221,32 +225,32 @@ const Index = () => {
         </TabsContent>
 
         <TabsContent value="compliance" className="space-y-4">
-          <Card>
+          <Card className="border-2 border-gray-100">
             <CardHeader>
-              <CardTitle>Customer Compliance Segments</CardTitle>
+              <CardTitle className="text-blue-900">Customer Compliance Segments</CardTitle>
             </CardHeader>
             <CardContent>
               <Table>
                 <TableHeader>
-                  <TableRow>
-                    <TableHead>Customer</TableHead>
-                    <TableHead>Compliance Level</TableHead>
-                    <TableHead>Risk Level</TableHead>
-                    <TableHead>Utilization Rate</TableHead>
-                    <TableHead>Actions</TableHead>
+                  <TableRow className="bg-gray-50">
+                    <TableHead className="font-semibold text-gray-700">Customer</TableHead>
+                    <TableHead className="font-semibold text-gray-700">Compliance Level</TableHead>
+                    <TableHead className="font-semibold text-gray-700">Risk Level</TableHead>
+                    <TableHead className="font-semibold text-gray-700">Utilization Rate</TableHead>
+                    <TableHead className="font-semibold text-gray-700">Actions</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {customerSegments.map((customer) => (
-                    <TableRow key={customer.id}>
-                      <TableCell className="font-medium">{customer.name}</TableCell>
+                    <TableRow key={customer.id} className="hover:bg-gray-50">
+                      <TableCell className="font-medium text-gray-900">{customer.name}</TableCell>
                       <TableCell>
                         <Badge variant="outline" className={`${
                           customer.compliance === "High" 
-                            ? "bg-green-100 text-green-800" 
+                            ? "bg-green-50 text-green-800 border-green-200" 
                             : customer.compliance === "Medium"
-                            ? "bg-yellow-100 text-yellow-800"
-                            : "bg-red-100 text-red-800"
+                            ? "bg-yellow-50 text-yellow-800 border-yellow-200"
+                            : "bg-red-50 text-red-800 border-red-200"
                         }`}>
                           {customer.compliance}
                         </Badge>
@@ -254,15 +258,15 @@ const Index = () => {
                       <TableCell>
                         <Badge variant="outline" className={`${
                           customer.risk === "Low" 
-                            ? "bg-green-100 text-green-800" 
+                            ? "bg-green-50 text-green-800 border-green-200" 
                             : customer.risk === "Medium"
-                            ? "bg-yellow-100 text-yellow-800"
-                            : "bg-red-100 text-red-800"
+                            ? "bg-yellow-50 text-yellow-800 border-yellow-200"
+                            : "bg-red-50 text-red-800 border-red-200"
                         }`}>
                           {customer.risk}
                         </Badge>
                       </TableCell>
-                      <TableCell>{customer.utilizationRate}</TableCell>
+                      <TableCell className="text-gray-900">{customer.utilizationRate}</TableCell>
                       <TableCell>
                         <Dialog>
                           <DialogTrigger asChild>
