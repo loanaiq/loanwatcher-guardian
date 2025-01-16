@@ -201,7 +201,26 @@ const Index = () => {
         
         <Card className="border-2 border-emerald-100 shadow-lg hover:border-emerald-200 transition-all">
           <CardHeader>
-            <CardTitle className="text-sm font-medium text-emerald-800">Utilization Rate</CardTitle>
+            <CardTitle className="text-sm font-medium text-emerald-800 flex items-center gap-2">
+              Utilization Rate
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Info className="h-4 w-4 text-emerald-600 cursor-help" />
+                  </TooltipTrigger>
+                  <TooltipContent className="max-w-xs">
+                    <p>Utilization Rate measures how effectively loan funds are being used:</p>
+                    <ul className="list-disc ml-4 mt-1">
+                      <li>Actual funds used vs. sanctioned amount</li>
+                      <li>Speed of fund deployment</li>
+                      <li>Purpose alignment</li>
+                      <li>Seasonal variations</li>
+                      <li>Industry benchmarks</li>
+                    </ul>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-emerald-900">87%</div>
