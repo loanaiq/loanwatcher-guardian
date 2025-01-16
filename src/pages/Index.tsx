@@ -5,8 +5,9 @@ import { LineChart, Line, XAxis, YAxis, ResponsiveContainer, Legend } from "rech
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { AlertTriangle, ArrowUpRight, AlertCircle, TrendingUp, ShieldAlert, Activity } from "lucide-react";
+import { AlertTriangle, ArrowUpRight, AlertCircle, TrendingUp, ShieldAlert, Activity, Info } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 // Updated sample data with year and month
 const loanData = [
@@ -210,7 +211,26 @@ const Index = () => {
         
         <Card className="border-2 border-amber-100 shadow-lg hover:border-amber-200 transition-all">
           <CardHeader>
-            <CardTitle className="text-sm font-medium text-amber-800">Risk Score</CardTitle>
+            <CardTitle className="text-sm font-medium text-amber-800 flex items-center gap-2">
+              Risk Score
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Info className="h-4 w-4 text-amber-600 cursor-help" />
+                  </TooltipTrigger>
+                  <TooltipContent className="max-w-xs">
+                    <p>Risk Score indicates the overall lending risk based on:</p>
+                    <ul className="list-disc ml-4 mt-1">
+                      <li>Payment history</li>
+                      <li>Fund utilization patterns</li>
+                      <li>Transaction behavior</li>
+                      <li>Compliance adherence</li>
+                      <li>Market sector performance</li>
+                    </ul>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-amber-900">Medium</div>
