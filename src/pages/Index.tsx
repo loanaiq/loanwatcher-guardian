@@ -218,6 +218,37 @@ const calculateAggregations = () => {
   };
 };
 
+const calculateCustomerTransactionAggregations = (customer: typeof customerSegments[0]) => {
+  const aggregations = {
+    debit: {
+      RTGS: { count: 0, totalAmount: 0 },
+      Cash: { count: 0, totalAmount: 0 },
+      Cheque: { count: 0, totalAmount: 0 },
+      NEFT: { count: 0, totalAmount: 0 }
+    },
+    credit: {
+      RTGS: { count: 0, totalAmount: 0 },
+      Cash: { count: 0, totalAmount: 0 },
+      Cheque: { count: 0, totalAmount: 0 },
+      NEFT: { count: 0, totalAmount: 0 }
+    }
+  };
+
+  // Aggregate debit transactions
+  customer.transactions.debit.forEach(transaction => {
+    aggregations.debit[transaction.paymentMethod].count += 1;
+    aggregations.debit[transaction.paymentMethod].totalAmount += transaction.amount;
+  });
+
+  // Aggregate credit transactions
+  customer.transactions.credit.forEach(transaction => {
+    aggregations.credit[transaction.paymentMethod].count += 1;
+    aggregations.credit[transaction.paymentMethod].totalAmount += transaction.amount;
+  });
+
+  return aggregations;
+};
+
 const Index = () => {
   console.log("Rendering Janakalyan Bank loan monitoring dashboard");
   
