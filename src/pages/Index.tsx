@@ -174,9 +174,19 @@ const Index = () => {
   
   return (
     <div className="container mx-auto p-6 bg-gradient-to-br from-slate-50 to-white">
-      <h1 className="text-3xl font-bold mb-6 text-primary bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600">
-        Loan Monitoring Dashboard
-      </h1>
+      <div className="flex items-center gap-4 mb-6">
+        <div className="w-12 h-12 rounded-lg bg-blue-50 border-2 border-blue-100 flex items-center justify-center">
+          {/* This is where you'll place your bank logo */}
+          <img
+            src="/placeholder.svg"
+            alt="Bank Logo"
+            className="w-8 h-8 object-contain"
+          />
+        </div>
+        <h1 className="text-3xl font-bold text-primary bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600">
+          Loan Monitoring Dashboard
+        </h1>
+      </div>
       
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
         <Card className="border-2 border-blue-100 shadow-lg hover:border-blue-200 transition-all">
