@@ -175,11 +175,11 @@ const Index = () => {
   return (
     <div className="container mx-auto p-6 bg-gradient-to-br from-slate-50 to-white">
       <div className="flex items-center gap-4 mb-6">
-        <div className="w-12 h-12 rounded-lg bg-blue-50 border-2 border-blue-100 flex items-center justify-center">
+        <div className="w-16 h-16 rounded-lg bg-white border-2 border-orange-200 flex items-center justify-center p-1">
           <img
-            src="/placeholder.svg"
+            src="/lovable-uploads/0473091d-142b-4ba1-86f8-14a9e67da0d6.png"
             alt="Janakalyan Bank Logo"
-            className="w-8 h-8 object-contain"
+            className="w-14 h-14 object-contain"
           />
         </div>
         <h1 className="text-3xl font-bold text-primary bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600">
