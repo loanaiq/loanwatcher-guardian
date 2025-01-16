@@ -5,7 +5,7 @@ import { LineChart, Line, XAxis, YAxis, ResponsiveContainer, Legend } from "rech
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { AlertTriangle, ArrowUpRight } from "lucide-react";
+import { AlertTriangle, ArrowUpRight, AlertCircle, TrendingUp, ShieldAlert, Activity } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
 // Updated sample data with year and month
@@ -24,6 +24,13 @@ const customerSegments = [
     compliance: "High", 
     risk: "Low", 
     utilizationRate: "92%",
+    behavioralScore: "Good",
+    patterns: {
+      loanMisuse: "No patterns detected",
+      fraudRisk: "Low",
+      fundDiversion: "None",
+      alerts: 0
+    },
     transactions: {
       debit: [
         { 
@@ -51,7 +58,7 @@ const customerSegments = [
           amount: 3000000,
           category: "Repayment", 
           paymentMethod: "Cheque",
-          flag: true,
+          flag: false,
           year: 2024,
           month: "March"
         }
@@ -64,6 +71,13 @@ const customerSegments = [
     compliance: "Medium", 
     risk: "Medium", 
     utilizationRate: "78%",
+    behavioralScore: "Needs Monitoring",
+    patterns: {
+      loanMisuse: "Occasional personal use detected",
+      fraudRisk: "Medium",
+      fundDiversion: "Some instances",
+      alerts: 3
+    },
     transactions: {
       debit: [
         { 
@@ -71,7 +85,7 @@ const customerSegments = [
           amount: 4000000,
           category: "Inventory", 
           paymentMethod: "Cash",
-          flag: false,
+          flag: true,
           year: 2024,
           month: "February"
         },
@@ -104,6 +118,13 @@ const customerSegments = [
     compliance: "Low", 
     risk: "High", 
     utilizationRate: "65%",
+    behavioralScore: "Critical",
+    patterns: {
+      loanMisuse: "Frequent misuse detected",
+      fraudRisk: "High",
+      fundDiversion: "Multiple instances",
+      alerts: 7
+    },
     transactions: {
       debit: [
         { 
@@ -153,7 +174,9 @@ const Index = () => {
   
   return (
     <div className="container mx-auto p-6 bg-gradient-to-br from-slate-50 to-white">
-      <h1 className="text-3xl font-bold mb-6 text-primary bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600">Loan Monitoring Dashboard</h1>
+      <h1 className="text-3xl font-bold mb-6 text-primary bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600">
+        Loan Monitoring Dashboard
+      </h1>
       
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
         <Card className="border-2 border-blue-100 shadow-lg hover:border-blue-200 transition-all">
@@ -205,9 +228,12 @@ const Index = () => {
           <TabsTrigger value="compliance" className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-900">
             Compliance Analysis
           </TabsTrigger>
+          <TabsTrigger value="monitoring" className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-900">
+            Behavioral Monitoring
+          </TabsTrigger>
         </TabsList>
 
-        <TabsContent value="utilization" className="space-y-4">
+        <TabsContent value="utilization">
           <Card className="border-2 border-gray-100">
             <CardHeader>
               <CardTitle className="text-blue-900">Loan Disbursement vs Utilization (2024)</CardTitle>
@@ -242,7 +268,7 @@ const Index = () => {
           </Card>
         </TabsContent>
 
-        <TabsContent value="compliance" className="space-y-4">
+        <TabsContent value="compliance">
           <Card className="border-2 border-gray-100">
             <CardHeader>
               <CardTitle className="text-blue-900">Customer Compliance Segments</CardTitle>
@@ -295,7 +321,7 @@ const Index = () => {
                           <DialogContent className="max-w-4xl">
                             <DialogHeader>
                               <DialogTitle className="flex items-center gap-2">
-                                {customer.name} - Transaction Analysis (2024)
+                                {customer.name} - Transaction Analysis
                               </DialogTitle>
                             </DialogHeader>
                             <div className="mt-4 space-y-6">
@@ -305,6 +331,7 @@ const Index = () => {
                                   <TableHeader>
                                     <TableRow>
                                       <TableHead>Date</TableHead>
+                                      <TableHead>Year</TableHead>
                                       <TableHead>Month</TableHead>
                                       <TableHead>Amount</TableHead>
                                       <TableHead>Category</TableHead>
@@ -316,11 +343,18 @@ const Index = () => {
                                     {customer.transactions.debit.map((transaction, index) => (
                                       <TableRow key={index}>
                                         <TableCell>{transaction.date}</TableCell>
+                                        <TableCell>{transaction.year}</TableCell>
                                         <TableCell>{transaction.month}</TableCell>
                                         <TableCell>{formatIndianCurrency(transaction.amount)}</TableCell>
                                         <TableCell>{transaction.category}</TableCell>
                                         <TableCell>
-                                          <Badge variant="outline">
+                                          <Badge variant="outline" className={
+                                            transaction.paymentMethod === "Cash" 
+                                              ? "bg-orange-50 text-orange-800 border-orange-200"
+                                              : transaction.paymentMethod === "RTGS" || transaction.paymentMethod === "NEFT"
+                                              ? "bg-blue-50 text-blue-800 border-blue-200"
+                                              : "bg-purple-50 text-purple-800 border-purple-200"
+                                          }>
                                             {transaction.paymentMethod}
                                           </Badge>
                                         </TableCell>
@@ -346,6 +380,7 @@ const Index = () => {
                                   <TableHeader>
                                     <TableRow>
                                       <TableHead>Date</TableHead>
+                                      <TableHead>Year</TableHead>
                                       <TableHead>Month</TableHead>
                                       <TableHead>Amount</TableHead>
                                       <TableHead>Category</TableHead>
@@ -357,11 +392,18 @@ const Index = () => {
                                     {customer.transactions.credit.map((transaction, index) => (
                                       <TableRow key={index}>
                                         <TableCell>{transaction.date}</TableCell>
+                                        <TableCell>{transaction.year}</TableCell>
                                         <TableCell>{transaction.month}</TableCell>
                                         <TableCell>{formatIndianCurrency(transaction.amount)}</TableCell>
                                         <TableCell>{transaction.category}</TableCell>
                                         <TableCell>
-                                          <Badge variant="outline">
+                                          <Badge variant="outline" className={
+                                            transaction.paymentMethod === "Cash" 
+                                              ? "bg-orange-50 text-orange-800 border-orange-200"
+                                              : transaction.paymentMethod === "RTGS" || transaction.paymentMethod === "NEFT"
+                                              ? "bg-blue-50 text-blue-800 border-blue-200"
+                                              : "bg-purple-50 text-purple-800 border-purple-200"
+                                          }>
                                             {transaction.paymentMethod}
                                           </Badge>
                                         </TableCell>
@@ -388,6 +430,76 @@ const Index = () => {
                   ))}
                 </TableBody>
               </Table>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="monitoring">
+          <Card className="border-2 border-gray-100">
+            <CardHeader>
+              <CardTitle className="text-blue-900">Behavioral Monitoring & Risk Analysis</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 gap-6">
+                {customerSegments.map((customer) => (
+                  <Card key={customer.id} className={`border-l-4 ${
+                    customer.behavioralScore === "Good" 
+                      ? "border-l-green-500" 
+                      : customer.behavioralScore === "Needs Monitoring"
+                      ? "border-l-yellow-500"
+                      : "border-l-red-500"
+                  } p-4`}>
+                    <div className="flex flex-col space-y-4">
+                      <div className="flex justify-between items-center">
+                        <h3 className="text-lg font-semibold">{customer.name}</h3>
+                        <Badge variant="outline" className={`${
+                          customer.behavioralScore === "Good" 
+                            ? "bg-green-50 text-green-800 border-green-200" 
+                            : customer.behavioralScore === "Needs Monitoring"
+                            ? "bg-yellow-50 text-yellow-800 border-yellow-200"
+                            : "bg-red-50 text-red-800 border-red-200"
+                        }`}>
+                          {customer.behavioralScore}
+                        </Badge>
+                      </div>
+                      
+                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <div className="flex items-start gap-2">
+                          <AlertCircle className="h-5 w-5 text-blue-600" />
+                          <div>
+                            <p className="text-sm font-medium">Loan Misuse</p>
+                            <p className="text-sm text-gray-600">{customer.patterns.loanMisuse}</p>
+                          </div>
+                        </div>
+                        
+                        <div className="flex items-start gap-2">
+                          <ShieldAlert className="h-5 w-5 text-red-600" />
+                          <div>
+                            <p className="text-sm font-medium">Fraud Risk</p>
+                            <p className="text-sm text-gray-600">{customer.patterns.fraudRisk}</p>
+                          </div>
+                        </div>
+                        
+                        <div className="flex items-start gap-2">
+                          <TrendingUp className="h-5 w-5 text-amber-600" />
+                          <div>
+                            <p className="text-sm font-medium">Fund Diversion</p>
+                            <p className="text-sm text-gray-600">{customer.patterns.fundDiversion}</p>
+                          </div>
+                        </div>
+                        
+                        <div className="flex items-start gap-2">
+                          <Activity className="h-5 w-5 text-purple-600" />
+                          <div>
+                            <p className="text-sm font-medium">Active Alerts</p>
+                            <p className="text-sm text-gray-600">{customer.patterns.alerts} alerts</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </Card>
+                ))}
+              </div>
             </CardContent>
           </Card>
         </TabsContent>
