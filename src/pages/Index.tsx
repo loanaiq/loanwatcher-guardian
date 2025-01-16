@@ -20,7 +20,7 @@ const loanData = [
 const customerSegments = [
   { 
     id: 1, 
-    name: "ABC Corp", 
+    name: "Tata Consultancy Services", 
     compliance: "High", 
     risk: "Low", 
     utilizationRate: "92%",
@@ -67,7 +67,7 @@ const customerSegments = [
   },
   { 
     id: 2, 
-    name: "XYZ Ltd", 
+    name: "Reliance Industries", 
     compliance: "Medium", 
     risk: "Medium", 
     utilizationRate: "78%",
@@ -114,7 +114,7 @@ const customerSegments = [
   },
   { 
     id: 3, 
-    name: "123 Industries", 
+    name: "Infosys Limited", 
     compliance: "Low", 
     risk: "High", 
     utilizationRate: "65%",
