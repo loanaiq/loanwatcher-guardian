@@ -10,7 +10,6 @@ import { AlertTriangle, ArrowUpRight, AlertCircle, TrendingUp, ShieldAlert, Acti
 import { Badge } from "@/components/ui/badge";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { format } from "date-fns";
 
 // Updated sample data with year and month
 const loanData = [
@@ -180,18 +179,22 @@ const Index = () => {
   const [selectedMonth, setSelectedMonth] = useState<string>("");
   const [selectedYear, setSelectedYear] = useState<string>("2024");
 
-  // Function to get unique months and years from transactions
-  const getUniqueDates = () => {
-    const dates = new Set<string>();
-    customerSegments.forEach(customer => {
-      [...customer.transactions.debit, ...customer.transactions.credit].forEach(tx => {
-        dates.add(`${tx.year}-${tx.month}`);
-      });
-    });
-    return Array.from(dates).sort();
+  // Function to calculate transaction totals
+  const calculateTransactionTotals = (transactions: any[]) => {
+    return {
+      cash: transactions
+        .filter(tx => tx.paymentMethod === "Cash")
+        .reduce((acc, tx) => acc + tx.amount, 0),
+      rtgsNeft: transactions
+        .filter(tx => ["RTGS", "NEFT"].includes(tx.paymentMethod))
+        .reduce((acc, tx) => acc + tx.amount, 0),
+      cheque: transactions
+        .filter(tx => tx.paymentMethod === "Cheque")
+        .reduce((acc, tx) => acc + tx.amount, 0)
+    };
   };
 
-  // Function to filter transactions based on selection
+  // Function to get filtered transactions
   const getFilteredTransactions = () => {
     if (!selectedCustomer) return null;
     
@@ -206,6 +209,9 @@ const Index = () => {
     const debitTx = customer.transactions.debit.filter(filterByDate);
     const creditTx = customer.transactions.credit.filter(filterByDate);
 
+    const debitTotals = calculateTransactionTotals(debitTx);
+    const creditTotals = calculateTransactionTotals(creditTx);
+
     const aggregateByMethod = (transactions: any[]) => {
       return {
         cash: transactions.filter(tx => tx.paymentMethod === "Cash"),
@@ -215,8 +221,14 @@ const Index = () => {
     };
 
     return {
-      debit: aggregateByMethod(debitTx),
-      credit: aggregateByMethod(creditTx)
+      debit: {
+        transactions: aggregateByMethod(debitTx),
+        totals: debitTotals
+      },
+      credit: {
+        transactions: aggregateByMethod(creditTx),
+        totals: creditTotals
+      }
     };
   };
 
@@ -660,8 +672,11 @@ const Index = () => {
                       <h3 className="text-lg font-semibold mb-4">Debit Transactions</h3>
                       <div className="space-y-4">
                         <Card className="border-orange-100">
-                          <CardHeader>
+                          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                             <CardTitle className="text-sm">Cash Transactions</CardTitle>
+                            <div className="text-sm font-semibold text-orange-600">
+                              Total: {formatIndianCurrency(filteredTransactions.debit.totals.cash)}
+                            </div>
                           </CardHeader>
                           <CardContent>
                             <Table>
@@ -673,7 +688,7 @@ const Index = () => {
                                 </TableRow>
                               </TableHeader>
                               <TableBody>
-                                {filteredTransactions.debit.cash.map((tx: any, i: number) => (
+                                {filteredTransactions.debit.transactions.cash.map((tx: any, i: number) => (
                                   <TableRow key={i}>
                                     <TableCell>{tx.date}</TableCell>
                                     <TableCell>{formatIndianCurrency(tx.amount)}</TableCell>
@@ -686,8 +701,11 @@ const Index = () => {
                         </Card>
 
                         <Card className="border-blue-100">
-                          <CardHeader>
+                          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                             <CardTitle className="text-sm">RTGS/NEFT Transactions</CardTitle>
+                            <div className="text-sm font-semibold text-blue-600">
+                              Total: {formatIndianCurrency(filteredTransactions.debit.totals.rtgsNeft)}
+                            </div>
                           </CardHeader>
                           <CardContent>
                             <Table>
@@ -700,7 +718,7 @@ const Index = () => {
                                 </TableRow>
                               </TableHeader>
                               <TableBody>
-                                {filteredTransactions.debit.rtgsNeft.map((tx: any, i: number) => (
+                                {filteredTransactions.debit.transactions.rtgsNeft.map((tx: any, i: number) => (
                                   <TableRow key={i}>
                                     <TableCell>{tx.date}</TableCell>
                                     <TableCell>{formatIndianCurrency(tx.amount)}</TableCell>
@@ -714,8 +732,11 @@ const Index = () => {
                         </Card>
 
                         <Card className="border-purple-100">
-                          <CardHeader>
+                          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                             <CardTitle className="text-sm">Cheque Transactions</CardTitle>
+                            <div className="text-sm font-semibold text-purple-600">
+                              Total: {formatIndianCurrency(filteredTransactions.debit.totals.cheque)}
+                            </div>
                           </CardHeader>
                           <CardContent>
                             <Table>
@@ -727,7 +748,7 @@ const Index = () => {
                                 </TableRow>
                               </TableHeader>
                               <TableBody>
-                                {filteredTransactions.debit.cheque.map((tx: any, i: number) => (
+                                {filteredTransactions.debit.transactions.cheque.map((tx: any, i: number) => (
                                   <TableRow key={i}>
                                     <TableCell>{tx.date}</TableCell>
                                     <TableCell>{formatIndianCurrency(tx.amount)}</TableCell>
@@ -745,8 +766,11 @@ const Index = () => {
                       <h3 className="text-lg font-semibold mb-4">Credit Transactions</h3>
                       <div className="space-y-4">
                         <Card className="border-orange-100">
-                          <CardHeader>
+                          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                             <CardTitle className="text-sm">Cash Transactions</CardTitle>
+                            <div className="text-sm font-semibold text-orange-600">
+                              Total: {formatIndianCurrency(filteredTransactions.credit.totals.cash)}
+                            </div>
                           </CardHeader>
                           <CardContent>
                             <Table>
@@ -758,7 +782,7 @@ const Index = () => {
                                 </TableRow>
                               </TableHeader>
                               <TableBody>
-                                {filteredTransactions.credit.cash.map((tx: any, i: number) => (
+                                {filteredTransactions.credit.transactions.cash.map((tx: any, i: number) => (
                                   <TableRow key={i}>
                                     <TableCell>{tx.date}</TableCell>
                                     <TableCell>{formatIndianCurrency(tx.amount)}</TableCell>
@@ -771,8 +795,11 @@ const Index = () => {
                         </Card>
 
                         <Card className="border-blue-100">
-                          <CardHeader>
+                          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                             <CardTitle className="text-sm">RTGS/NEFT Transactions</CardTitle>
+                            <div className="text-sm font-semibold text-blue-600">
+                              Total: {formatIndianCurrency(filteredTransactions.credit.totals.rtgsNeft)}
+                            </div>
                           </CardHeader>
                           <CardContent>
                             <Table>
@@ -785,7 +812,7 @@ const Index = () => {
                                 </TableRow>
                               </TableHeader>
                               <TableBody>
-                                {filteredTransactions.credit.rtgsNeft.map((tx: any, i: number) => (
+                                {filteredTransactions.credit.transactions.rtgsNeft.map((tx: any, i: number) => (
                                   <TableRow key={i}>
                                     <TableCell>{tx.date}</TableCell>
                                     <TableCell>{formatIndianCurrency(tx.amount)}</TableCell>
@@ -799,8 +826,11 @@ const Index = () => {
                         </Card>
 
                         <Card className="border-purple-100">
-                          <CardHeader>
+                          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                             <CardTitle className="text-sm">Cheque Transactions</CardTitle>
+                            <div className="text-sm font-semibold text-purple-600">
+                              Total: {formatIndianCurrency(filteredTransactions.credit.totals.cheque)}
+                            </div>
                           </CardHeader>
                           <CardContent>
                             <Table>
@@ -812,7 +842,7 @@ const Index = () => {
                                 </TableRow>
                               </TableHeader>
                               <TableBody>
-                                {filteredTransactions.credit.cheque.map((tx: any, i: number) => (
+                                {filteredTransactions.credit.transactions.cheque.map((tx: any, i: number) => (
                                   <TableRow key={i}>
                                     <TableCell>{tx.date}</TableCell>
                                     <TableCell>{formatIndianCurrency(tx.amount)}</TableCell>
