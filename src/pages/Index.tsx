@@ -245,41 +245,41 @@ const Index = () => {
   const filteredTransactions = getFilteredTransactions();
 
   return (
-    <div className="container mx-auto p-6 bg-gradient-to-br from-[#F1F0FB] to-white">
+    <div className="container mx-auto p-6 bg-background">
       <div className="flex items-center gap-4 mb-6">
-        <div className="w-16 h-16 rounded-lg bg-white border-2 border-[#D3E4FD] flex items-center justify-center p-1">
+        <div className="w-16 h-16 rounded-lg bg-white border-2 border-gray-300 flex items-center justify-center p-1">
           <img
             src="/lovable-uploads/0473091d-142b-4ba1-86f8-14a9e67da0d6.png"
             alt="Janakalyan Bank Logo"
             className="w-14 h-14 object-contain"
           />
         </div>
-        <h1 className="text-3xl font-bold text-primary bg-clip-text text-transparent bg-gradient-to-r from-[#33C3F0] to-[#1EAEDB]">
+        <h1 className="text-3xl font-bold text-primary">
           Janakalyan Bank - Loan Monitoring Dashboard
         </h1>
       </div>
       
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-        <Card className="border-2 border-[#D3E4FD] shadow-lg hover:border-[#33C3F0] transition-all bg-gradient-to-br from-white to-[#F1F0FB]">
+        <Card className="border-2 border-gray-300 shadow-sm">
           <CardHeader>
-            <CardTitle className="text-sm font-medium text-[#0FA0CE]">Total Disbursement</CardTitle>
+            <CardTitle className="text-sm font-medium">Total Disbursement</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-[#1EAEDB]">{formatIndianCurrency(85000000)}</div>
-            <p className="text-xs text-[#33C3F0]">+12% from last month</p>
+            <div className="text-2xl font-bold">{formatIndianCurrency(85000000)}</div>
+            <p className="text-xs text-muted-foreground">+12% from last month</p>
           </CardContent>
         </Card>
         
-        <Card className="border-2 border-[#F2FCE2] shadow-lg hover:border-[#D3E4FD] transition-all bg-gradient-to-br from-white to-[#F2FCE2]">
+        <Card className="border-2 border-gray-300 shadow-sm">
           <CardHeader>
-            <CardTitle className="text-sm font-medium text-[#0FA0CE] flex items-center gap-2">
+            <CardTitle className="text-sm font-medium flex items-center gap-2">
               Utilization Rate
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <Info className="h-4 w-4 text-[#33C3F0] cursor-help" />
+                    <Info className="h-4 w-4 cursor-help" />
                   </TooltipTrigger>
-                  <TooltipContent className="max-w-xs bg-white border-[#D3E4FD]">
+                  <TooltipContent className="max-w-xs bg-white border-2 border-gray-300">
                     <p>Utilization Rate measures how effectively loan funds are being used:</p>
                     <ul className="list-disc ml-4 mt-1">
                       <li>Actual funds used vs. sanctioned amount</li>
@@ -294,21 +294,21 @@ const Index = () => {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-[#1EAEDB]">87%</div>
-            <p className="text-xs text-[#33C3F0]">Average across all accounts</p>
+            <div className="text-2xl font-bold">87%</div>
+            <p className="text-xs text-muted-foreground">Average across all accounts</p>
           </CardContent>
         </Card>
         
-        <Card className="border-2 border-[#FEF7CD] shadow-lg hover:border-[#D3E4FD] transition-all bg-gradient-to-br from-white to-[#FEF7CD]">
+        <Card className="border-2 border-gray-300 shadow-sm">
           <CardHeader>
-            <CardTitle className="text-sm font-medium text-[#0FA0CE] flex items-center gap-2">
+            <CardTitle className="text-sm font-medium flex items-center gap-2">
               Risk Score
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <Info className="h-4 w-4 text-[#33C3F0] cursor-help" />
+                    <Info className="h-4 w-4 cursor-help" />
                   </TooltipTrigger>
-                  <TooltipContent className="max-w-xs bg-white border-[#D3E4FD]">
+                  <TooltipContent className="max-w-xs bg-white border-2 border-gray-300">
                     <p>Risk Score indicates the overall lending risk based on:</p>
                     <ul className="list-disc ml-4 mt-1">
                       <li>Payment history</li>
@@ -323,40 +323,40 @@ const Index = () => {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-[#1EAEDB]">Medium</div>
-            <p className="text-xs text-[#33C3F0]">Based on current patterns</p>
+            <div className="text-2xl font-bold">Medium</div>
+            <p className="text-xs text-muted-foreground">Based on current patterns</p>
           </CardContent>
         </Card>
 
-        <Card className="border-2 border-[#E5DEFF] shadow-lg hover:border-[#D3E4FD] transition-all bg-gradient-to-br from-white to-[#E5DEFF]">
+        <Card className="border-2 border-gray-300 shadow-sm">
           <CardHeader>
-            <CardTitle className="text-sm font-medium text-[#0FA0CE]">Active Loan Accounts</CardTitle>
+            <CardTitle className="text-sm font-medium">Active Loan Accounts</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-[#1EAEDB]">127</div>
-            <p className="text-xs text-[#33C3F0]">+3 new this month</p>
+            <div className="text-2xl font-bold">127</div>
+            <p className="text-xs text-muted-foreground">+3 new this month</p>
           </CardContent>
         </Card>
       </div>
 
       <Tabs defaultValue="utilization" className="space-y-4">
-        <TabsList className="bg-white border-2 border-[#D3E4FD] p-1">
-          <TabsTrigger value="utilization" className="data-[state=active]:bg-[#D3E4FD] data-[state=active]:text-[#0FA0CE]">
+        <TabsList className="bg-card border-2 border-gray-300 p-1">
+          <TabsTrigger value="utilization" className="data-[state=active]:bg-muted">
             Utilization Patterns
           </TabsTrigger>
-          <TabsTrigger value="compliance" className="data-[state=active]:bg-[#D3E4FD] data-[state=active]:text-[#0FA0CE]">
+          <TabsTrigger value="compliance" className="data-[state=active]:bg-muted">
             Compliance Analysis
           </TabsTrigger>
-          <TabsTrigger value="monitoring" className="data-[state=active]:bg-[#D3E4FD] data-[state=active]:text-[#0FA0CE]">
+          <TabsTrigger value="monitoring" className="data-[state=active]:bg-muted">
             Behavioral Monitoring
           </TabsTrigger>
-          <TabsTrigger value="transactions" className="data-[state=active]:bg-[#D3E4FD] data-[state=active]:text-[#0FA0CE]">
+          <TabsTrigger value="transactions" className="data-[state=active]:bg-muted">
             Transaction Analysis
           </TabsTrigger>
         </TabsList>
 
         <TabsContent value="utilization">
-          <Card className="border-2 border-gray-100">
+          <Card className="border-2 border-gray-300">
             <CardHeader>
               <CardTitle className="text-blue-900">Loan Disbursement vs Utilization (2024)</CardTitle>
             </CardHeader>
@@ -391,14 +391,14 @@ const Index = () => {
         </TabsContent>
 
         <TabsContent value="compliance">
-          <Card className="border-2 border-gray-100">
+          <Card className="border-2 border-gray-300">
             <CardHeader>
-              <CardTitle className="text-blue-900">Customer Compliance Segments</CardTitle>
+              <CardTitle>Customer Compliance Segments</CardTitle>
             </CardHeader>
             <CardContent>
-              <Table className="border-2 border-[#D3E4FD]">
+              <Table className="border-2 border-gray-300">
                 <TableHeader>
-                  <TableRow className="bg-gray-50 border-b-2 border-[#D3E4FD]">
+                  <TableRow className="bg-muted border-b-2 border-gray-300">
                     <TableHead className="font-semibold text-gray-700">Customer</TableHead>
                     <TableHead className="font-semibold text-gray-700">Compliance Level</TableHead>
                     <TableHead className="font-semibold text-gray-700">Risk Level</TableHead>
@@ -406,7 +406,7 @@ const Index = () => {
                     <TableHead className="font-semibold text-gray-700">Actions</TableHead>
                   </TableRow>
                 </TableHeader>
-                <TableBody className="[&_tr]:border-b-2 [&_tr]:border-[#D3E4FD]/40">
+                <TableBody className="[&_tr]:border-b-2 [&_tr]:border-gray-200">
                   {customerSegments.map((customer) => (
                     <TableRow key={customer.id} className="hover:bg-gray-50">
                       <TableCell className="font-medium text-gray-900">{customer.name}</TableCell>
@@ -557,7 +557,7 @@ const Index = () => {
         </TabsContent>
 
         <TabsContent value="monitoring">
-          <Card className="border-2 border-gray-100">
+          <Card className="border-2 border-gray-300">
             <CardHeader>
               <CardTitle className="text-blue-900">Behavioral Monitoring & Risk Analysis</CardTitle>
             </CardHeader>
@@ -627,7 +627,7 @@ const Index = () => {
         </TabsContent>
 
         <TabsContent value="transactions">
-          <Card className="border-2 border-gray-100">
+          <Card className="border-2 border-gray-300">
             <CardHeader>
               <CardTitle className="text-blue-900">Customer Transaction Analysis</CardTitle>
             </CardHeader>
@@ -690,7 +690,7 @@ const Index = () => {
                     <div>
                       <h3 className="text-lg font-semibold mb-4">Debit Transactions</h3>
                       <div className="space-y-4">
-                        <Card className="border-orange-100">
+                        <Card className="border-2 border-gray-300">
                           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                             <CardTitle className="text-sm">Cash Transactions</CardTitle>
                             <div className="text-sm font-semibold text-orange-600">
@@ -698,16 +698,16 @@ const Index = () => {
                             </div>
                           </CardHeader>
                           <CardContent>
-                            <Table className="border-2 border-orange-100">
+                            <Table className="border-2 border-gray-300">
                               <TableHeader>
-                                <TableRow className="border-b-2 border-orange-100">
+                                <TableRow className="border-b-2 border-gray-300">
                                   <TableHead>Date</TableHead>
                                   <TableHead>Amount</TableHead>
                                   <TableHead>Category</TableHead>
                                   {selectedCustomer === "all" && <TableHead>Customer</TableHead>}
                                 </TableRow>
                               </TableHeader>
-                              <TableBody className="[&_tr]:border-b-2 [&_tr]:border-orange-100/40">
+                              <TableBody className="[&_tr]:border-b-2 [&_tr]:border-gray-300/40">
                                 {filteredTransactions.debit.transactions.cash.map((tx: any, i: number) => (
                                   <TableRow key={i}>
                                     <TableCell>{tx.date}</TableCell>
@@ -724,7 +724,7 @@ const Index = () => {
                           </CardContent>
                         </Card>
 
-                        <Card className="border-blue-100">
+                        <Card className="border-2 border-gray-300">
                           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                             <CardTitle className="text-sm">RTGS/NEFT Transactions</CardTitle>
                             <div className="text-sm font-semibold text-blue-600">
@@ -732,16 +732,16 @@ const Index = () => {
                             </div>
                           </CardHeader>
                           <CardContent>
-                            <Table className="border-2 border-blue-100">
+                            <Table className="border-2 border-gray-300">
                               <TableHeader>
-                                <TableRow className="border-b-2 border-blue-100">
+                                <TableRow className="border-b-2 border-gray-300">
                                   <TableHead>Date</TableHead>
                                   <TableHead>Amount</TableHead>
                                   <TableHead>Category</TableHead>
                                   <TableHead>Type</TableHead>
                                 </TableRow>
                               </TableHeader>
-                              <TableBody className="[&_tr]:border-b-2 [&_tr]:border-blue-100/40">
+                              <TableBody className="[&_tr]:border-b-2 [&_tr]:border-gray-300/40">
                                 {filteredTransactions.debit.transactions.rtgsNeft.map((tx: any, i: number) => (
                                   <TableRow key={i}>
                                     <TableCell>{tx.date}</TableCell>
@@ -755,7 +755,7 @@ const Index = () => {
                           </CardContent>
                         </Card>
 
-                        <Card className="border-purple-100">
+                        <Card className="border-2 border-gray-300">
                           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                             <CardTitle className="text-sm">Cheque Transactions</CardTitle>
                             <div className="text-sm font-semibold text-purple-600">
@@ -763,15 +763,15 @@ const Index = () => {
                             </div>
                           </CardHeader>
                           <CardContent>
-                            <Table className="border-2 border-purple-100">
+                            <Table className="border-2 border-gray-300">
                               <TableHeader>
-                                <TableRow className="border-b-2 border-purple-100">
+                                <TableRow className="border-b-2 border-gray-300">
                                   <TableHead>Date</TableHead>
                                   <TableHead>Amount</TableHead>
                                   <TableHead>Category</TableHead>
                                 </TableRow>
                               </TableHeader>
-                              <TableBody className="[&_tr]:border-b-2 [&_tr]:border-purple-100/40">
+                              <TableBody className="[&_tr]:border-b-2 [&_tr]:border-gray-300/40">
                                 {filteredTransactions.debit.transactions.cheque.map((tx: any, i: number) => (
                                   <TableRow key={i}>
                                     <TableCell>{tx.date}</TableCell>
@@ -789,7 +789,7 @@ const Index = () => {
                     <div>
                       <h3 className="text-lg font-semibold mb-4">Credit Transactions</h3>
                       <div className="space-y-4">
-                        <Card className="border-orange-100">
+                        <Card className="border-2 border-gray-300">
                           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                             <CardTitle className="text-sm">Cash Transactions</CardTitle>
                             <div className="text-sm font-semibold text-orange-600">
@@ -797,15 +797,15 @@ const Index = () => {
                             </div>
                           </CardHeader>
                           <CardContent>
-                            <Table className="border-2 border-orange-100">
+                            <Table className="border-2 border-gray-300">
                               <TableHeader>
-                                <TableRow className="border-b-2 border-orange-100">
+                                <TableRow className="border-b-2 border-gray-300">
                                   <TableHead>Date</TableHead>
                                   <TableHead>Amount</TableHead>
                                   <TableHead>Category</TableHead>
                                 </TableRow>
                               </TableHeader>
-                              <TableBody className="[&_tr]:border-b-2 [&_tr]:border-orange-100/40">
+                              <TableBody className="[&_tr]:border-b-2 [&_tr]:border-gray-300/40">
                                 {filteredTransactions.credit.transactions.cash.map((tx: any, i: number) => (
                                   <TableRow key={i}>
                                     <TableCell>{tx.date}</TableCell>
@@ -818,7 +818,7 @@ const Index = () => {
                           </CardContent>
                         </Card>
 
-                        <Card className="border-blue-100">
+                        <Card className="border-2 border-gray-300">
                           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                             <CardTitle className="text-sm">RTGS/NEFT Transactions</CardTitle>
                             <div className="text-sm font-semibold text-blue-600">
@@ -826,16 +826,16 @@ const Index = () => {
                             </div>
                           </CardHeader>
                           <CardContent>
-                            <Table className="border-2 border-blue-100">
+                            <Table className="border-2 border-gray-300">
                               <TableHeader>
-                                <TableRow className="border-b-2 border-blue-100">
+                                <TableRow className="border-b-2 border-gray-300">
                                   <TableHead>Date</TableHead>
                                   <TableHead>Amount</TableHead>
                                   <TableHead>Category</TableHead>
                                   <TableHead>Type</TableHead>
                                 </TableRow>
                               </TableHeader>
-                              <TableBody className="[&_tr]:border-b-2 [&_tr]:border-blue-100/40">
+                              <TableBody className="[&_tr]:border-b-2 [&_tr]:border-gray-300/40">
                                 {filteredTransactions.credit.transactions.rtgsNeft.map((tx: any, i: number) => (
                                   <TableRow key={i}>
                                     <TableCell>{tx.date}</TableCell>
@@ -849,7 +849,7 @@ const Index = () => {
                           </CardContent>
                         </Card>
 
-                        <Card className="border-purple-100">
+                        <Card className="border-2 border-gray-300">
                           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                             <CardTitle className="text-sm">Cheque Transactions</CardTitle>
                             <div className="text-sm font-semibold text-purple-600">
@@ -857,15 +857,15 @@ const Index = () => {
                             </div>
                           </CardHeader>
                           <CardContent>
-                            <Table className="border-2 border-purple-100">
+                            <Table className="border-2 border-gray-300">
                               <TableHeader>
-                                <TableRow className="border-b-2 border-purple-100">
+                                <TableRow className="border-b-2 border-gray-300">
                                   <TableHead>Date</TableHead>
                                   <TableHead>Amount</TableHead>
                                   <TableHead>Category</TableHead>
                                 </TableRow>
                               </TableHeader>
-                              <TableBody className="[&_tr]:border-b-2 [&_tr]:border-purple-100/40">
+                              <TableBody className="[&_tr]:border-b-2 [&_tr]:border-gray-300/40">
                                 {filteredTransactions.credit.transactions.cheque.map((tx: any, i: number) => (
                                   <TableRow key={i}>
                                     <TableCell>{tx.date}</TableCell>
