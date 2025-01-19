@@ -396,9 +396,9 @@ const Index = () => {
               <CardTitle className="text-blue-900">Customer Compliance Segments</CardTitle>
             </CardHeader>
             <CardContent>
-              <Table>
+              <Table className="border-2 border-[#D3E4FD]">
                 <TableHeader>
-                  <TableRow className="bg-gray-50">
+                  <TableRow className="bg-gray-50 border-b-2 border-[#D3E4FD]">
                     <TableHead className="font-semibold text-gray-700">Customer</TableHead>
                     <TableHead className="font-semibold text-gray-700">Compliance Level</TableHead>
                     <TableHead className="font-semibold text-gray-700">Risk Level</TableHead>
@@ -406,7 +406,7 @@ const Index = () => {
                     <TableHead className="font-semibold text-gray-700">Actions</TableHead>
                   </TableRow>
                 </TableHeader>
-                <TableBody>
+                <TableBody className="[&_tr]:border-b-2 [&_tr]:border-[#D3E4FD]/40">
                   {customerSegments.map((customer) => (
                     <TableRow key={customer.id} className="hover:bg-gray-50">
                       <TableCell className="font-medium text-gray-900">{customer.name}</TableCell>
@@ -698,16 +698,16 @@ const Index = () => {
                             </div>
                           </CardHeader>
                           <CardContent>
-                            <Table>
+                            <Table className="border-2 border-orange-100">
                               <TableHeader>
-                                <TableRow>
+                                <TableRow className="border-b-2 border-orange-100">
                                   <TableHead>Date</TableHead>
                                   <TableHead>Amount</TableHead>
                                   <TableHead>Category</TableHead>
                                   {selectedCustomer === "all" && <TableHead>Customer</TableHead>}
                                 </TableRow>
                               </TableHeader>
-                              <TableBody>
+                              <TableBody className="[&_tr]:border-b-2 [&_tr]:border-orange-100/40">
                                 {filteredTransactions.debit.transactions.cash.map((tx: any, i: number) => (
                                   <TableRow key={i}>
                                     <TableCell>{tx.date}</TableCell>
@@ -732,16 +732,16 @@ const Index = () => {
                             </div>
                           </CardHeader>
                           <CardContent>
-                            <Table>
+                            <Table className="border-2 border-blue-100">
                               <TableHeader>
-                                <TableRow>
+                                <TableRow className="border-b-2 border-blue-100">
                                   <TableHead>Date</TableHead>
                                   <TableHead>Amount</TableHead>
                                   <TableHead>Category</TableHead>
                                   <TableHead>Type</TableHead>
                                 </TableRow>
                               </TableHeader>
-                              <TableBody>
+                              <TableBody className="[&_tr]:border-b-2 [&_tr]:border-blue-100/40">
                                 {filteredTransactions.debit.transactions.rtgsNeft.map((tx: any, i: number) => (
                                   <TableRow key={i}>
                                     <TableCell>{tx.date}</TableCell>
@@ -763,15 +763,15 @@ const Index = () => {
                             </div>
                           </CardHeader>
                           <CardContent>
-                            <Table>
+                            <Table className="border-2 border-purple-100">
                               <TableHeader>
-                                <TableRow>
+                                <TableRow className="border-b-2 border-purple-100">
                                   <TableHead>Date</TableHead>
                                   <TableHead>Amount</TableHead>
                                   <TableHead>Category</TableHead>
                                 </TableRow>
                               </TableHeader>
-                              <TableBody>
+                              <TableBody className="[&_tr]:border-b-2 [&_tr]:border-purple-100/40">
                                 {filteredTransactions.debit.transactions.cheque.map((tx: any, i: number) => (
                                   <TableRow key={i}>
                                     <TableCell>{tx.date}</TableCell>
@@ -797,15 +797,15 @@ const Index = () => {
                             </div>
                           </CardHeader>
                           <CardContent>
-                            <Table>
+                            <Table className="border-2 border-orange-100">
                               <TableHeader>
-                                <TableRow>
+                                <TableRow className="border-b-2 border-orange-100">
                                   <TableHead>Date</TableHead>
                                   <TableHead>Amount</TableHead>
                                   <TableHead>Category</TableHead>
                                 </TableRow>
                               </TableHeader>
-                              <TableBody>
+                              <TableBody className="[&_tr]:border-b-2 [&_tr]:border-orange-100/40">
                                 {filteredTransactions.credit.transactions.cash.map((tx: any, i: number) => (
                                   <TableRow key={i}>
                                     <TableCell>{tx.date}</TableCell>
@@ -826,16 +826,16 @@ const Index = () => {
                             </div>
                           </CardHeader>
                           <CardContent>
-                            <Table>
+                            <Table className="border-2 border-blue-100">
                               <TableHeader>
-                                <TableRow>
+                                <TableRow className="border-b-2 border-blue-100">
                                   <TableHead>Date</TableHead>
                                   <TableHead>Amount</TableHead>
                                   <TableHead>Category</TableHead>
                                   <TableHead>Type</TableHead>
                                 </TableRow>
                               </TableHeader>
-                              <TableBody>
+                              <TableBody className="[&_tr]:border-b-2 [&_tr]:border-blue-100/40">
                                 {filteredTransactions.credit.transactions.rtgsNeft.map((tx: any, i: number) => (
                                   <TableRow key={i}>
                                     <TableCell>{tx.date}</TableCell>
@@ -857,15 +857,15 @@ const Index = () => {
                             </div>
                           </CardHeader>
                           <CardContent>
-                            <Table>
+                            <Table className="border-2 border-purple-100">
                               <TableHeader>
-                                <TableRow>
+                                <TableRow className="border-b-2 border-purple-100">
                                   <TableHead>Date</TableHead>
                                   <TableHead>Amount</TableHead>
                                   <TableHead>Category</TableHead>
                                 </TableRow>
                               </TableHeader>
-                              <TableBody>
+                              <TableBody className="[&_tr]:border-b-2 [&_tr]:border-purple-100/40">
                                 {filteredTransactions.credit.transactions.cheque.map((tx: any, i: number) => (
                                   <TableRow key={i}>
                                     <TableCell>{tx.date}</TableCell>
