@@ -235,41 +235,41 @@ const Index = () => {
   const filteredTransactions = getFilteredTransactions();
 
   return (
-    <div className="container mx-auto p-6 bg-gradient-to-br from-slate-50 to-white">
+    <div className="container mx-auto p-6 bg-gradient-to-br from-[#F1F0FB] to-white">
       <div className="flex items-center gap-4 mb-6">
-        <div className="w-16 h-16 rounded-lg bg-white border-2 border-orange-200 flex items-center justify-center p-1">
+        <div className="w-16 h-16 rounded-lg bg-white border-2 border-[#D3E4FD] flex items-center justify-center p-1">
           <img
             src="/lovable-uploads/0473091d-142b-4ba1-86f8-14a9e67da0d6.png"
             alt="Janakalyan Bank Logo"
             className="w-14 h-14 object-contain"
           />
         </div>
-        <h1 className="text-3xl font-bold text-primary bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600">
+        <h1 className="text-3xl font-bold text-primary bg-clip-text text-transparent bg-gradient-to-r from-[#33C3F0] to-[#1EAEDB]">
           Janakalyan Bank - Loan Monitoring Dashboard
         </h1>
       </div>
       
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-        <Card className="border-2 border-blue-100 shadow-lg hover:border-blue-200 transition-all">
+        <Card className="border-2 border-[#D3E4FD] shadow-lg hover:border-[#33C3F0] transition-all bg-gradient-to-br from-white to-[#F1F0FB]">
           <CardHeader>
-            <CardTitle className="text-sm font-medium text-blue-800">Total Disbursement</CardTitle>
+            <CardTitle className="text-sm font-medium text-[#0FA0CE]">Total Disbursement</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-blue-900">{formatIndianCurrency(85000000)}</div>
-            <p className="text-xs text-blue-600">+12% from last month</p>
+            <div className="text-2xl font-bold text-[#1EAEDB]">{formatIndianCurrency(85000000)}</div>
+            <p className="text-xs text-[#33C3F0]">+12% from last month</p>
           </CardContent>
         </Card>
         
-        <Card className="border-2 border-emerald-100 shadow-lg hover:border-emerald-200 transition-all">
+        <Card className="border-2 border-[#F2FCE2] shadow-lg hover:border-[#D3E4FD] transition-all bg-gradient-to-br from-white to-[#F2FCE2]">
           <CardHeader>
-            <CardTitle className="text-sm font-medium text-emerald-800 flex items-center gap-2">
+            <CardTitle className="text-sm font-medium text-[#0FA0CE] flex items-center gap-2">
               Utilization Rate
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <Info className="h-4 w-4 text-emerald-600 cursor-help" />
+                    <Info className="h-4 w-4 text-[#33C3F0] cursor-help" />
                   </TooltipTrigger>
-                  <TooltipContent className="max-w-xs">
+                  <TooltipContent className="max-w-xs bg-white border-[#D3E4FD]">
                     <p>Utilization Rate measures how effectively loan funds are being used:</p>
                     <ul className="list-disc ml-4 mt-1">
                       <li>Actual funds used vs. sanctioned amount</li>
@@ -284,21 +284,21 @@ const Index = () => {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-emerald-900">87%</div>
-            <p className="text-xs text-emerald-600">Average across all accounts</p>
+            <div className="text-2xl font-bold text-[#1EAEDB]">87%</div>
+            <p className="text-xs text-[#33C3F0]">Average across all accounts</p>
           </CardContent>
         </Card>
         
-        <Card className="border-2 border-amber-100 shadow-lg hover:border-amber-200 transition-all">
+        <Card className="border-2 border-[#FEF7CD] shadow-lg hover:border-[#D3E4FD] transition-all bg-gradient-to-br from-white to-[#FEF7CD]">
           <CardHeader>
-            <CardTitle className="text-sm font-medium text-amber-800 flex items-center gap-2">
+            <CardTitle className="text-sm font-medium text-[#0FA0CE] flex items-center gap-2">
               Risk Score
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <Info className="h-4 w-4 text-amber-600 cursor-help" />
+                    <Info className="h-4 w-4 text-[#33C3F0] cursor-help" />
                   </TooltipTrigger>
-                  <TooltipContent className="max-w-xs">
+                  <TooltipContent className="max-w-xs bg-white border-[#D3E4FD]">
                     <p>Risk Score indicates the overall lending risk based on:</p>
                     <ul className="list-disc ml-4 mt-1">
                       <li>Payment history</li>
@@ -313,28 +313,36 @@ const Index = () => {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-amber-900">Medium</div>
-            <p className="text-xs text-amber-600">Based on current patterns</p>
+            <div className="text-2xl font-bold text-[#1EAEDB]">Medium</div>
+            <p className="text-xs text-[#33C3F0]">Based on current patterns</p>
           </CardContent>
         </Card>
 
-        <Card className="border-2 border-purple-100 shadow-lg hover:border-purple-200 transition-all">
+        <Card className="border-2 border-[#E5DEFF] shadow-lg hover:border-[#D3E4FD] transition-all bg-gradient-to-br from-white to-[#E5DEFF]">
           <CardHeader>
-            <CardTitle className="text-sm font-medium text-purple-800">Active Loan Accounts</CardTitle>
+            <CardTitle className="text-sm font-medium text-[#0FA0CE]">Active Loan Accounts</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-purple-900">127</div>
-            <p className="text-xs text-purple-600">+3 new this month</p>
+            <div className="text-2xl font-bold text-[#1EAEDB]">127</div>
+            <p className="text-xs text-[#33C3F0]">+3 new this month</p>
           </CardContent>
         </Card>
       </div>
 
       <Tabs defaultValue="utilization" className="space-y-4">
-        <TabsList className="bg-white border-2 border-gray-100 p-1">
-          <TabsTrigger value="utilization">Utilization Patterns</TabsTrigger>
-          <TabsTrigger value="compliance">Compliance Analysis</TabsTrigger>
-          <TabsTrigger value="monitoring">Behavioral Monitoring</TabsTrigger>
-          <TabsTrigger value="transactions">Transaction Analysis</TabsTrigger>
+        <TabsList className="bg-white border-2 border-[#D3E4FD] p-1">
+          <TabsTrigger value="utilization" className="data-[state=active]:bg-[#D3E4FD] data-[state=active]:text-[#0FA0CE]">
+            Utilization Patterns
+          </TabsTrigger>
+          <TabsTrigger value="compliance" className="data-[state=active]:bg-[#D3E4FD] data-[state=active]:text-[#0FA0CE]">
+            Compliance Analysis
+          </TabsTrigger>
+          <TabsTrigger value="monitoring" className="data-[state=active]:bg-[#D3E4FD] data-[state=active]:text-[#0FA0CE]">
+            Behavioral Monitoring
+          </TabsTrigger>
+          <TabsTrigger value="transactions" className="data-[state=active]:bg-[#D3E4FD] data-[state=active]:text-[#0FA0CE]">
+            Transaction Analysis
+          </TabsTrigger>
         </TabsList>
 
         <TabsContent value="utilization">
