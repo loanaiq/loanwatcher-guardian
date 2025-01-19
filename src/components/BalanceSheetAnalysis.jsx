@@ -128,8 +128,11 @@ const BalanceSheetAnalysis = () => {
             <TableHeader>
               <TableRow className="hover:bg-transparent">
                 <TableHead className="w-[250px] bg-primary/10 border-r font-semibold">Liabilities</TableHead>
-                {balanceSheetData.map((data) => (
-                  <TableHead key={data.year} className="text-right bg-muted/50">
+                {balanceSheetData.map((data, index) => (
+                  <TableHead 
+                    key={data.year} 
+                    className={`text-right bg-muted/50 ${index !== balanceSheetData.length - 1 ? 'border-r' : ''}`}
+                  >
                     {data.year} ({data.auditStatus})
                   </TableHead>
                 ))}
@@ -138,50 +141,90 @@ const BalanceSheetAnalysis = () => {
             <TableBody>
               <TableRow>
                 <TableCell className="font-medium bg-primary/5 border-r">Capital</TableCell>
-                {balanceSheetData.map((data) => (
-                  <TableCell key={data.year} className="text-right">{data.capital.toFixed(2)}</TableCell>
+                {balanceSheetData.map((data, index) => (
+                  <TableCell 
+                    key={data.year} 
+                    className={`text-right ${index !== balanceSheetData.length - 1 ? 'border-r' : ''}`}
+                  >
+                    {data.capital.toFixed(2)}
+                  </TableCell>
                 ))}
               </TableRow>
               <TableRow>
                 <TableCell className="font-medium bg-primary/5 border-r">Unsec. Loan - Own Source</TableCell>
-                {balanceSheetData.map((data) => (
-                  <TableCell key={data.year} className="text-right">{data.unsecuredLoanOwnSource.toFixed(2)}</TableCell>
+                {balanceSheetData.map((data, index) => (
+                  <TableCell 
+                    key={data.year} 
+                    className={`text-right ${index !== balanceSheetData.length - 1 ? 'border-r' : ''}`}
+                  >
+                    {data.unsecuredLoanOwnSource.toFixed(2)}
+                  </TableCell>
                 ))}
               </TableRow>
               <TableRow>
                 <TableCell className="font-medium bg-primary/5 border-r">Term Loan (existing)</TableCell>
-                {balanceSheetData.map((data) => (
-                  <TableCell key={data.year} className="text-right">{data.termLoanExisting.toFixed(2)}</TableCell>
+                {balanceSheetData.map((data, index) => (
+                  <TableCell 
+                    key={data.year} 
+                    className={`text-right ${index !== balanceSheetData.length - 1 ? 'border-r' : ''}`}
+                  >
+                    {data.termLoanExisting.toFixed(2)}
+                  </TableCell>
                 ))}
               </TableRow>
               <TableRow>
                 <TableCell className="font-medium bg-primary/5 border-r">Installment due within one year</TableCell>
-                {balanceSheetData.map((data) => (
-                  <TableCell key={data.year} className="text-right">{data.installmentDueWithinYear.toFixed(2)}</TableCell>
+                {balanceSheetData.map((data, index) => (
+                  <TableCell 
+                    key={data.year} 
+                    className={`text-right ${index !== balanceSheetData.length - 1 ? 'border-r' : ''}`}
+                  >
+                    {data.installmentDueWithinYear.toFixed(2)}
+                  </TableCell>
                 ))}
               </TableRow>
               <TableRow>
                 <TableCell className="font-medium bg-primary/5 border-r">CC</TableCell>
-                {balanceSheetData.map((data) => (
-                  <TableCell key={data.year} className="text-right">{data.cc.toFixed(2)}</TableCell>
+                {balanceSheetData.map((data, index) => (
+                  <TableCell 
+                    key={data.year} 
+                    className={`text-right ${index !== balanceSheetData.length - 1 ? 'border-r' : ''}`}
+                  >
+                    {data.cc.toFixed(2)}
+                  </TableCell>
                 ))}
               </TableRow>
               <TableRow>
                 <TableCell className="font-medium bg-primary/5 border-r">Sundry Crs</TableCell>
-                {balanceSheetData.map((data) => (
-                  <TableCell key={data.year} className="text-right">{data.sundryCrs.toFixed(2)}</TableCell>
+                {balanceSheetData.map((data, index) => (
+                  <TableCell 
+                    key={data.year} 
+                    className={`text-right ${index !== balanceSheetData.length - 1 ? 'border-r' : ''}`}
+                  >
+                    {data.sundryCrs.toFixed(2)}
+                  </TableCell>
                 ))}
               </TableRow>
               <TableRow>
                 <TableCell className="font-medium bg-primary/5 border-r">Other Creditors / liabilities</TableCell>
-                {balanceSheetData.map((data) => (
-                  <TableCell key={data.year} className="text-right">{data.otherLiabilities.toFixed(2)}</TableCell>
+                {balanceSheetData.map((data, index) => (
+                  <TableCell 
+                    key={data.year} 
+                    className={`text-right ${index !== balanceSheetData.length - 1 ? 'border-r' : ''}`}
+                  >
+                    {data.otherLiabilities.toFixed(2)}
+                  </TableCell>
                 ))}
               </TableRow>
               <TableRow>
                 <TableCell className="font-bold bg-primary/10 border-r">TOTAL</TableCell>
-                {balanceSheetData.map((data) => (
-                  <TableCell key={data.year} className="text-right font-bold bg-muted">{data.total.toFixed(2)}</TableCell>
+                {balanceSheetData.map((data, index) => (
+                  <TableCell 
+                    key={data.year} 
+                    className={`text-right font-bold bg-muted ${index !== balanceSheetData.length - 1 ? 'border-r' : ''}`}
+                  >
+                    {data.total.toFixed(2)}
+                  </TableCell>
                 ))}
               </TableRow>
             </TableBody>
