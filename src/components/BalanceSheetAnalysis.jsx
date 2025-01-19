@@ -109,7 +109,7 @@ const BalanceSheetAnalysis = () => {
 
   return (
     <div className="max-w-[1400px] mx-auto p-4 md:p-6 space-y-6">
-      <div className="flex items-center gap-4">
+      <div className="flex flex-col items-center gap-4">
         <div className="w-16 h-16 rounded-lg bg-white border-2 border-gray-300 flex items-center justify-center p-1">
           <img
             src="/lovable-uploads/0473091d-142b-4ba1-86f8-14a9e67da0d6.png"
