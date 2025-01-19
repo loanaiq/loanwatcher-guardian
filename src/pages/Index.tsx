@@ -198,19 +198,29 @@ const Index = () => {
   const getFilteredTransactions = () => {
     if (!selectedCustomer) return null;
     
-    const customer = customerSegments.find(c => c.name === selectedCustomer);
-    if (!customer) return null;
+    let customersToProcess = selectedCustomer === "all" 
+      ? customerSegments 
+      : [customerSegments.find(c => c.name === selectedCustomer)].filter(Boolean);
+
+    if (customersToProcess.length === 0) return null;
 
     const filterByDate = (tx: any) => {
       if (!selectedMonth || !selectedYear) return true;
       return tx.month === selectedMonth && tx.year.toString() === selectedYear;
     };
 
-    const debitTx = customer.transactions.debit.filter(filterByDate);
-    const creditTx = customer.transactions.credit.filter(filterByDate);
+    const allTransactions = customersToProcess.reduce((acc, customer) => {
+      const debitTx = customer.transactions.debit.filter(filterByDate);
+      const creditTx = customer.transactions.credit.filter(filterByDate);
 
-    const debitTotals = calculateTransactionTotals(debitTx);
-    const creditTotals = calculateTransactionTotals(creditTx);
+      return {
+        debit: [...acc.debit, ...debitTx],
+        credit: [...acc.credit, ...creditTx]
+      };
+    }, { debit: [], credit: [] });
+
+    const debitTotals = calculateTransactionTotals(allTransactions.debit);
+    const creditTotals = calculateTransactionTotals(allTransactions.credit);
 
     const aggregateByMethod = (transactions: any[]) => {
       return {
@@ -222,11 +232,11 @@ const Index = () => {
 
     return {
       debit: {
-        transactions: aggregateByMethod(debitTx),
+        transactions: aggregateByMethod(allTransactions.debit),
         totals: debitTotals
       },
       credit: {
-        transactions: aggregateByMethod(creditTx),
+        transactions: aggregateByMethod(allTransactions.credit),
         totals: creditTotals
       }
     };
@@ -631,6 +641,7 @@ const Index = () => {
                         <SelectValue placeholder="Select customer" />
                       </SelectTrigger>
                       <SelectContent>
+                        <SelectItem value="all">All Customers</SelectItem>
                         {customerSegments.map(customer => (
                           <SelectItem key={customer.id} value={customer.name}>
                             {customer.name}
@@ -693,6 +704,7 @@ const Index = () => {
                                   <TableHead>Date</TableHead>
                                   <TableHead>Amount</TableHead>
                                   <TableHead>Category</TableHead>
+                                  {selectedCustomer === "all" && <TableHead>Customer</TableHead>}
                                 </TableRow>
                               </TableHeader>
                               <TableBody>
@@ -701,6 +713,10 @@ const Index = () => {
                                     <TableCell>{tx.date}</TableCell>
                                     <TableCell>{formatIndianCurrency(tx.amount)}</TableCell>
                                     <TableCell>{tx.category}</TableCell>
+                                    {selectedCustomer === "all" && 
+                                      <TableCell>{customerSegments.find(c => 
+                                        c.transactions.debit.includes(tx))?.name}</TableCell>
+                                    }
                                   </TableRow>
                                 ))}
                               </TableBody>
