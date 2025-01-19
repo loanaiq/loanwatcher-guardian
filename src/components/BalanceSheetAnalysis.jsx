@@ -122,19 +122,19 @@ const BalanceSheetAnalysis = () => {
         </h1>
       </div>
 
-      <Card className="border-2">
+      <Card className="border-2 border-gray-300">
         <CardContent className="overflow-x-auto p-6">
           <Table>
             <TableHeader>
-              <TableRow className="hover:bg-transparent">
-                <TableHead className="w-[250px] bg-primary text-primary-foreground font-bold text-base border-r">
+              <TableRow className="hover:bg-transparent border-b-2 border-gray-300">
+                <TableHead className="w-[250px] bg-muted border-r-2 border-gray-300 font-semibold text-gray-700 text-base">
                   Liabilities
                 </TableHead>
                 {balanceSheetData.map((data, index) => (
                   <TableHead 
                     key={data.year} 
-                    className={`text-right bg-primary text-primary-foreground font-bold text-base ${
-                      index !== balanceSheetData.length - 1 ? 'border-r' : ''
+                    className={`text-right bg-muted font-semibold text-gray-700 text-base ${
+                      index !== balanceSheetData.length - 1 ? 'border-r-2 border-gray-300' : ''
                     }`}
                   >
                     {data.year} ({data.auditStatus})
@@ -142,90 +142,90 @@ const BalanceSheetAnalysis = () => {
                 ))}
               </TableRow>
             </TableHeader>
-            <TableBody>
+            <TableBody className="[&_tr]:border-b-2 [&_tr]:border-gray-200">
               <TableRow>
-                <TableCell className="font-medium bg-primary/5 border-r">Capital</TableCell>
+                <TableCell className="font-medium bg-gray-50 border-r-2 border-gray-300">Capital</TableCell>
                 {balanceSheetData.map((data, index) => (
                   <TableCell 
                     key={data.year} 
-                    className={`text-right ${index !== balanceSheetData.length - 1 ? 'border-r' : ''}`}
+                    className={`text-right ${index !== balanceSheetData.length - 1 ? 'border-r-2 border-gray-300' : ''}`}
                   >
                     {data.capital.toFixed(2)}
                   </TableCell>
                 ))}
               </TableRow>
               <TableRow>
-                <TableCell className="font-medium bg-primary/5 border-r">Unsec. Loan - Own Source</TableCell>
+                <TableCell className="font-medium bg-gray-50 border-r-2 border-gray-300">Unsec. Loan - Own Source</TableCell>
                 {balanceSheetData.map((data, index) => (
                   <TableCell 
                     key={data.year} 
-                    className={`text-right ${index !== balanceSheetData.length - 1 ? 'border-r' : ''}`}
+                    className={`text-right ${index !== balanceSheetData.length - 1 ? 'border-r-2 border-gray-300' : ''}`}
                   >
                     {data.unsecuredLoanOwnSource.toFixed(2)}
                   </TableCell>
                 ))}
               </TableRow>
               <TableRow>
-                <TableCell className="font-medium bg-primary/5 border-r">Term Loan (existing)</TableCell>
+                <TableCell className="font-medium bg-gray-50 border-r-2 border-gray-300">Term Loan (existing)</TableCell>
                 {balanceSheetData.map((data, index) => (
                   <TableCell 
                     key={data.year} 
-                    className={`text-right ${index !== balanceSheetData.length - 1 ? 'border-r' : ''}`}
+                    className={`text-right ${index !== balanceSheetData.length - 1 ? 'border-r-2 border-gray-300' : ''}`}
                   >
                     {data.termLoanExisting.toFixed(2)}
                   </TableCell>
                 ))}
               </TableRow>
               <TableRow>
-                <TableCell className="font-medium bg-primary/5 border-r">Installment due within one year</TableCell>
+                <TableCell className="font-medium bg-gray-50 border-r-2 border-gray-300">Installment due within one year</TableCell>
                 {balanceSheetData.map((data, index) => (
                   <TableCell 
                     key={data.year} 
-                    className={`text-right ${index !== balanceSheetData.length - 1 ? 'border-r' : ''}`}
+                    className={`text-right ${index !== balanceSheetData.length - 1 ? 'border-r-2 border-gray-300' : ''}`}
                   >
                     {data.installmentDueWithinYear.toFixed(2)}
                   </TableCell>
                 ))}
               </TableRow>
               <TableRow>
-                <TableCell className="font-medium bg-primary/5 border-r">CC</TableCell>
+                <TableCell className="font-medium bg-gray-50 border-r-2 border-gray-300">CC</TableCell>
                 {balanceSheetData.map((data, index) => (
                   <TableCell 
                     key={data.year} 
-                    className={`text-right ${index !== balanceSheetData.length - 1 ? 'border-r' : ''}`}
+                    className={`text-right ${index !== balanceSheetData.length - 1 ? 'border-r-2 border-gray-300' : ''}`}
                   >
                     {data.cc.toFixed(2)}
                   </TableCell>
                 ))}
               </TableRow>
               <TableRow>
-                <TableCell className="font-medium bg-primary/5 border-r">Sundry Crs</TableCell>
+                <TableCell className="font-medium bg-gray-50 border-r-2 border-gray-300">Sundry Crs</TableCell>
                 {balanceSheetData.map((data, index) => (
                   <TableCell 
                     key={data.year} 
-                    className={`text-right ${index !== balanceSheetData.length - 1 ? 'border-r' : ''}`}
+                    className={`text-right ${index !== balanceSheetData.length - 1 ? 'border-r-2 border-gray-300' : ''}`}
                   >
                     {data.sundryCrs.toFixed(2)}
                   </TableCell>
                 ))}
               </TableRow>
               <TableRow>
-                <TableCell className="font-medium bg-primary/5 border-r">Other Creditors / liabilities</TableCell>
+                <TableCell className="font-medium bg-gray-50 border-r-2 border-gray-300">Other Creditors / liabilities</TableCell>
                 {balanceSheetData.map((data, index) => (
                   <TableCell 
                     key={data.year} 
-                    className={`text-right ${index !== balanceSheetData.length - 1 ? 'border-r' : ''}`}
+                    className={`text-right ${index !== balanceSheetData.length - 1 ? 'border-r-2 border-gray-300' : ''}`}
                   >
                     {data.otherLiabilities.toFixed(2)}
                   </TableCell>
                 ))}
               </TableRow>
               <TableRow>
-                <TableCell className="font-bold bg-primary/10 border-r">TOTAL</TableCell>
+                <TableCell className="font-bold bg-gray-100 border-r-2 border-gray-300">TOTAL</TableCell>
                 {balanceSheetData.map((data, index) => (
                   <TableCell 
                     key={data.year} 
-                    className={`text-right font-bold bg-muted ${index !== balanceSheetData.length - 1 ? 'border-r' : ''}`}
+                    className={`text-right font-bold bg-gray-100 ${index !== balanceSheetData.length - 1 ? 'border-r-2 border-gray-300' : ''}`}
                   >
                     {data.total.toFixed(2)}
                   </TableCell>
