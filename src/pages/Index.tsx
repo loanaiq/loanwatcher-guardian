@@ -8,6 +8,8 @@ import { Button } from "@/components/ui/button";
 import { AlertTriangle, ArrowUpRight, AlertCircle, TrendingUp, ShieldAlert, Activity, Info } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { format } from "date-fns";
 
 // Updated sample data with year and month
 const loanData = [
@@ -173,6 +175,53 @@ const formatIndianCurrency = (value: number) => {
 const Index = () => {
   console.log("Rendering Janakalyan Bank loan monitoring dashboard");
   
+  // Add new state for transaction analysis
+  const [selectedCustomer, setSelectedCustomer] = React.useState<string>("");
+  const [selectedMonth, setSelectedMonth] = React.useState<string>("");
+  const [selectedYear, setSelectedYear] = React.useState<string>("2024");
+
+  // Function to get unique months and years from transactions
+  const getUniqueDates = () => {
+    const dates = new Set<string>();
+    customerSegments.forEach(customer => {
+      [...customer.transactions.debit, ...customer.transactions.credit].forEach(tx => {
+        dates.add(`${tx.year}-${tx.month}`);
+      });
+    });
+    return Array.from(dates).sort();
+  };
+
+  // Function to filter transactions based on selection
+  const getFilteredTransactions = () => {
+    if (!selectedCustomer) return null;
+    
+    const customer = customerSegments.find(c => c.name === selectedCustomer);
+    if (!customer) return null;
+
+    const filterByDate = (tx: any) => {
+      if (!selectedMonth || !selectedYear) return true;
+      return tx.month === selectedMonth && tx.year.toString() === selectedYear;
+    };
+
+    const debitTx = customer.transactions.debit.filter(filterByDate);
+    const creditTx = customer.transactions.credit.filter(filterByDate);
+
+    const aggregateByMethod = (transactions: any[]) => {
+      return {
+        cash: transactions.filter(tx => tx.paymentMethod === "Cash"),
+        rtgsNeft: transactions.filter(tx => ["RTGS", "NEFT"].includes(tx.paymentMethod)),
+        cheque: transactions.filter(tx => tx.paymentMethod === "Cheque")
+      };
+    };
+
+    return {
+      debit: aggregateByMethod(debitTx),
+      credit: aggregateByMethod(creditTx)
+    };
+  };
+
+  const filteredTransactions = getFilteredTransactions();
+
   return (
     <div className="container mx-auto p-6 bg-gradient-to-br from-slate-50 to-white">
       <div className="flex items-center gap-4 mb-6">
@@ -270,15 +319,10 @@ const Index = () => {
 
       <Tabs defaultValue="utilization" className="space-y-4">
         <TabsList className="bg-white border-2 border-gray-100 p-1">
-          <TabsTrigger value="utilization" className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-900">
-            Utilization Patterns
-          </TabsTrigger>
-          <TabsTrigger value="compliance" className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-900">
-            Compliance Analysis
-          </TabsTrigger>
-          <TabsTrigger value="monitoring" className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-900">
-            Behavioral Monitoring
-          </TabsTrigger>
+          <TabsTrigger value="utilization">Utilization Patterns</TabsTrigger>
+          <TabsTrigger value="compliance">Compliance Analysis</TabsTrigger>
+          <TabsTrigger value="monitoring">Behavioral Monitoring</TabsTrigger>
+          <TabsTrigger value="transactions">Transaction Analysis</TabsTrigger>
         </TabsList>
 
         <TabsContent value="utilization">
@@ -547,6 +591,242 @@ const Index = () => {
                     </div>
                   </Card>
                 ))}
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="transactions">
+          <Card className="border-2 border-gray-100">
+            <CardHeader>
+              <CardTitle className="text-blue-900">Customer Transaction Analysis</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-6">
+                <div className="flex flex-wrap gap-4">
+                  <div className="w-full md:w-64">
+                    <label className="text-sm font-medium mb-2 block">Select Customer</label>
+                    <Select value={selectedCustomer} onValueChange={setSelectedCustomer}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select customer" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {customerSegments.map(customer => (
+                          <SelectItem key={customer.id} value={customer.name}>
+                            {customer.name}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <div className="w-full md:w-48">
+                    <label className="text-sm font-medium mb-2 block">Month</label>
+                    <Select value={selectedMonth} onValueChange={setSelectedMonth}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select month" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {["January", "February", "March", "April", "May", "June", 
+                          "July", "August", "September", "October", "November", "December"].map(month => (
+                          <SelectItem key={month} value={month}>
+                            {month}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <div className="w-full md:w-32">
+                    <label className="text-sm font-medium mb-2 block">Year</label>
+                    <Select value={selectedYear} onValueChange={setSelectedYear}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select year" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {["2024", "2023"].map(year => (
+                          <SelectItem key={year} value={year}>
+                            {year}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+
+                {selectedCustomer && filteredTransactions && (
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <div>
+                      <h3 className="text-lg font-semibold mb-4">Debit Transactions</h3>
+                      <div className="space-y-4">
+                        <Card className="border-orange-100">
+                          <CardHeader>
+                            <CardTitle className="text-sm">Cash Transactions</CardTitle>
+                          </CardHeader>
+                          <CardContent>
+                            <Table>
+                              <TableHeader>
+                                <TableRow>
+                                  <TableHead>Date</TableHead>
+                                  <TableHead>Amount</TableHead>
+                                  <TableHead>Category</TableHead>
+                                </TableRow>
+                              </TableHeader>
+                              <TableBody>
+                                {filteredTransactions.debit.cash.map((tx: any, i: number) => (
+                                  <TableRow key={i}>
+                                    <TableCell>{tx.date}</TableCell>
+                                    <TableCell>{formatIndianCurrency(tx.amount)}</TableCell>
+                                    <TableCell>{tx.category}</TableCell>
+                                  </TableRow>
+                                ))}
+                              </TableBody>
+                            </Table>
+                          </CardContent>
+                        </Card>
+
+                        <Card className="border-blue-100">
+                          <CardHeader>
+                            <CardTitle className="text-sm">RTGS/NEFT Transactions</CardTitle>
+                          </CardHeader>
+                          <CardContent>
+                            <Table>
+                              <TableHeader>
+                                <TableRow>
+                                  <TableHead>Date</TableHead>
+                                  <TableHead>Amount</TableHead>
+                                  <TableHead>Category</TableHead>
+                                  <TableHead>Type</TableHead>
+                                </TableRow>
+                              </TableHeader>
+                              <TableBody>
+                                {filteredTransactions.debit.rtgsNeft.map((tx: any, i: number) => (
+                                  <TableRow key={i}>
+                                    <TableCell>{tx.date}</TableCell>
+                                    <TableCell>{formatIndianCurrency(tx.amount)}</TableCell>
+                                    <TableCell>{tx.category}</TableCell>
+                                    <TableCell>{tx.paymentMethod}</TableCell>
+                                  </TableRow>
+                                ))}
+                              </TableBody>
+                            </Table>
+                          </CardContent>
+                        </Card>
+
+                        <Card className="border-purple-100">
+                          <CardHeader>
+                            <CardTitle className="text-sm">Cheque Transactions</CardTitle>
+                          </CardHeader>
+                          <CardContent>
+                            <Table>
+                              <TableHeader>
+                                <TableRow>
+                                  <TableHead>Date</TableHead>
+                                  <TableHead>Amount</TableHead>
+                                  <TableHead>Category</TableHead>
+                                </TableRow>
+                              </TableHeader>
+                              <TableBody>
+                                {filteredTransactions.debit.cheque.map((tx: any, i: number) => (
+                                  <TableRow key={i}>
+                                    <TableCell>{tx.date}</TableCell>
+                                    <TableCell>{formatIndianCurrency(tx.amount)}</TableCell>
+                                    <TableCell>{tx.category}</TableCell>
+                                  </TableRow>
+                                ))}
+                              </TableBody>
+                            </Table>
+                          </CardContent>
+                        </Card>
+                      </div>
+                    </div>
+
+                    <div>
+                      <h3 className="text-lg font-semibold mb-4">Credit Transactions</h3>
+                      <div className="space-y-4">
+                        <Card className="border-orange-100">
+                          <CardHeader>
+                            <CardTitle className="text-sm">Cash Transactions</CardTitle>
+                          </CardHeader>
+                          <CardContent>
+                            <Table>
+                              <TableHeader>
+                                <TableRow>
+                                  <TableHead>Date</TableHead>
+                                  <TableHead>Amount</TableHead>
+                                  <TableHead>Category</TableHead>
+                                </TableRow>
+                              </TableHeader>
+                              <TableBody>
+                                {filteredTransactions.credit.cash.map((tx: any, i: number) => (
+                                  <TableRow key={i}>
+                                    <TableCell>{tx.date}</TableCell>
+                                    <TableCell>{formatIndianCurrency(tx.amount)}</TableCell>
+                                    <TableCell>{tx.category}</TableCell>
+                                  </TableRow>
+                                ))}
+                              </TableBody>
+                            </Table>
+                          </CardContent>
+                        </Card>
+
+                        <Card className="border-blue-100">
+                          <CardHeader>
+                            <CardTitle className="text-sm">RTGS/NEFT Transactions</CardTitle>
+                          </CardHeader>
+                          <CardContent>
+                            <Table>
+                              <TableHeader>
+                                <TableRow>
+                                  <TableHead>Date</TableHead>
+                                  <TableHead>Amount</TableHead>
+                                  <TableHead>Category</TableHead>
+                                  <TableHead>Type</TableHead>
+                                </TableRow>
+                              </TableHeader>
+                              <TableBody>
+                                {filteredTransactions.credit.rtgsNeft.map((tx: any, i: number) => (
+                                  <TableRow key={i}>
+                                    <TableCell>{tx.date}</TableCell>
+                                    <TableCell>{formatIndianCurrency(tx.amount)}</TableCell>
+                                    <TableCell>{tx.category}</TableCell>
+                                    <TableCell>{tx.paymentMethod}</TableCell>
+                                  </TableRow>
+                                ))}
+                              </TableBody>
+                            </Table>
+                          </CardContent>
+                        </Card>
+
+                        <Card className="border-purple-100">
+                          <CardHeader>
+                            <CardTitle className="text-sm">Cheque Transactions</CardTitle>
+                          </CardHeader>
+                          <CardContent>
+                            <Table>
+                              <TableHeader>
+                                <TableRow>
+                                  <TableHead>Date</TableHead>
+                                  <TableHead>Amount</TableHead>
+                                  <TableHead>Category</TableHead>
+                                </TableRow>
+                              </TableHeader>
+                              <TableBody>
+                                {filteredTransactions.credit.cheque.map((tx: any, i: number) => (
+                                  <TableRow key={i}>
+                                    <TableCell>{tx.date}</TableCell>
+                                    <TableCell>{formatIndianCurrency(tx.amount)}</TableCell>
+                                    <TableCell>{tx.category}</TableCell>
+                                  </TableRow>
+                                ))}
+                              </TableBody>
+                            </Table>
+                          </CardContent>
+                        </Card>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
             </CardContent>
           </Card>
