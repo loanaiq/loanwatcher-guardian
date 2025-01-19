@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ChartContainer, ChartTooltip } from "@/components/ui/chart";
@@ -175,10 +176,9 @@ const formatIndianCurrency = (value: number) => {
 const Index = () => {
   console.log("Rendering Janakalyan Bank loan monitoring dashboard");
   
-  // Add new state for transaction analysis
-  const [selectedCustomer, setSelectedCustomer] = React.useState<string>("");
-  const [selectedMonth, setSelectedMonth] = React.useState<string>("");
-  const [selectedYear, setSelectedYear] = React.useState<string>("2024");
+  const [selectedCustomer, setSelectedCustomer] = useState<string>("");
+  const [selectedMonth, setSelectedMonth] = useState<string>("");
+  const [selectedYear, setSelectedYear] = useState<string>("2024");
 
   // Function to get unique months and years from transactions
   const getUniqueDates = () => {
