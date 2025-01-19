@@ -109,12 +109,20 @@ const BalanceSheetAnalysis = () => {
 
   return (
     <div className="container mx-auto p-6">
+      <div className="flex items-center gap-4 mb-8">
+        <div className="w-16 h-16 rounded-lg bg-white border-2 border-gray-300 flex items-center justify-center p-1">
+          <img
+            src="/lovable-uploads/0473091d-142b-4ba1-86f8-14a9e67da0d6.png"
+            alt="Janakalyan Bank Logo"
+            className="w-14 h-14 object-contain"
+          />
+        </div>
+        <h1 className="text-3xl font-bold text-primary">
+          Onboarding of Business Customer
+        </h1>
+      </div>
+
       <Card>
-        <CardHeader>
-          <CardTitle className="text-2xl font-bold text-center">
-            Onboarding of Business Customer
-          </CardTitle>
-        </CardHeader>
         <CardContent className="overflow-x-auto">
           <Table>
             <TableHeader>
