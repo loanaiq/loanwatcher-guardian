@@ -127,11 +127,15 @@ const BalanceSheetAnalysis = () => {
           <Table>
             <TableHeader>
               <TableRow className="hover:bg-transparent">
-                <TableHead className="w-[250px] bg-primary/10 border-r font-semibold">Liabilities</TableHead>
+                <TableHead className="w-[250px] bg-primary text-primary-foreground font-bold text-base border-r">
+                  Liabilities
+                </TableHead>
                 {balanceSheetData.map((data, index) => (
                   <TableHead 
                     key={data.year} 
-                    className={`text-right bg-muted/50 ${index !== balanceSheetData.length - 1 ? 'border-r' : ''}`}
+                    className={`text-right bg-primary text-primary-foreground font-bold text-base ${
+                      index !== balanceSheetData.length - 1 ? 'border-r' : ''
+                    }`}
                   >
                     {data.year} ({data.auditStatus})
                   </TableHead>
