@@ -127,7 +127,7 @@ const BalanceSheetAnalysis = () => {
           <Table>
             <TableHeader>
               <TableRow className="hover:bg-transparent">
-                <TableHead className="w-[200px] bg-muted/50">Liabilities</TableHead>
+                <TableHead className="w-[250px] bg-primary/10 border-r font-semibold">Liabilities</TableHead>
                 {balanceSheetData.map((data) => (
                   <TableHead key={data.year} className="text-right bg-muted/50">
                     {data.year} ({data.auditStatus})
@@ -137,49 +137,49 @@ const BalanceSheetAnalysis = () => {
             </TableHeader>
             <TableBody>
               <TableRow>
-                <TableCell className="font-medium bg-muted/20">Capital</TableCell>
+                <TableCell className="font-medium bg-primary/5 border-r">Capital</TableCell>
                 {balanceSheetData.map((data) => (
                   <TableCell key={data.year} className="text-right">{data.capital.toFixed(2)}</TableCell>
                 ))}
               </TableRow>
               <TableRow>
-                <TableCell className="font-medium bg-muted/20">Unsec. Loan - Own Source</TableCell>
+                <TableCell className="font-medium bg-primary/5 border-r">Unsec. Loan - Own Source</TableCell>
                 {balanceSheetData.map((data) => (
                   <TableCell key={data.year} className="text-right">{data.unsecuredLoanOwnSource.toFixed(2)}</TableCell>
                 ))}
               </TableRow>
               <TableRow>
-                <TableCell className="font-medium bg-muted/20">Term Loan (existing)</TableCell>
+                <TableCell className="font-medium bg-primary/5 border-r">Term Loan (existing)</TableCell>
                 {balanceSheetData.map((data) => (
                   <TableCell key={data.year} className="text-right">{data.termLoanExisting.toFixed(2)}</TableCell>
                 ))}
               </TableRow>
               <TableRow>
-                <TableCell className="font-medium bg-muted/20">Installment due within one year</TableCell>
+                <TableCell className="font-medium bg-primary/5 border-r">Installment due within one year</TableCell>
                 {balanceSheetData.map((data) => (
                   <TableCell key={data.year} className="text-right">{data.installmentDueWithinYear.toFixed(2)}</TableCell>
                 ))}
               </TableRow>
               <TableRow>
-                <TableCell className="font-medium bg-muted/20">CC</TableCell>
+                <TableCell className="font-medium bg-primary/5 border-r">CC</TableCell>
                 {balanceSheetData.map((data) => (
                   <TableCell key={data.year} className="text-right">{data.cc.toFixed(2)}</TableCell>
                 ))}
               </TableRow>
               <TableRow>
-                <TableCell className="font-medium bg-muted/20">Sundry Crs</TableCell>
+                <TableCell className="font-medium bg-primary/5 border-r">Sundry Crs</TableCell>
                 {balanceSheetData.map((data) => (
                   <TableCell key={data.year} className="text-right">{data.sundryCrs.toFixed(2)}</TableCell>
                 ))}
               </TableRow>
               <TableRow>
-                <TableCell className="font-medium bg-muted/20">Other Creditors / liabilities</TableCell>
+                <TableCell className="font-medium bg-primary/5 border-r">Other Creditors / liabilities</TableCell>
                 {balanceSheetData.map((data) => (
                   <TableCell key={data.year} className="text-right">{data.otherLiabilities.toFixed(2)}</TableCell>
                 ))}
               </TableRow>
               <TableRow>
-                <TableCell className="font-bold bg-muted">TOTAL</TableCell>
+                <TableCell className="font-bold bg-primary/10 border-r">TOTAL</TableCell>
                 {balanceSheetData.map((data) => (
                   <TableCell key={data.year} className="text-right font-bold bg-muted">{data.total.toFixed(2)}</TableCell>
                 ))}
